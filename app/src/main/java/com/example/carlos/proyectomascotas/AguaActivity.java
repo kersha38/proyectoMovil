@@ -55,7 +55,7 @@ public class AguaActivity extends AppCompatActivity {
     public void crearDialogoAlert(){
         // Builder para crear la alerta
         // this = getaplicationcontext
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(this);
         dialogoAlerta.setTitle("ALERTA PARA LLENAR AGUA");
         dialogoAlerta.setMessage("¿Esta seguro de llenar recipiente con agua?");
 
