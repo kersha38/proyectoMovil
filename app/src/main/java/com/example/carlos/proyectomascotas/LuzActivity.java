@@ -25,7 +25,7 @@ public class LuzActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // envio peticion al servior
-                Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_SHORT).show();
 
                 //datos quemados cambiar
                 if(txtEstadoIluminacion.getText()=="apagado"){
