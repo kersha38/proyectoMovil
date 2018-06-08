@@ -1,6 +1,5 @@
 package com.example.carlos.proyectomascotas;
 
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -26,7 +25,7 @@ public class LuzActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // envio peticion al servior
-                Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_SHORT).show();
 
                 //datos quemados cambiar
                 if(txtEstadoIluminacion.getText()=="apagado"){
