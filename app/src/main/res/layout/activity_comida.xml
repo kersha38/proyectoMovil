@@ -109,23 +109,24 @@
 
     <Button
         android:id="@+id/buttonPonerAlimento"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="94dp"
+        android:layout_height="84dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="50dp"
         android:layout_marginLeft="100dp"
         android:layout_marginRight="50dp"
         android:layout_marginStart="100dp"
         android:layout_marginTop="28dp"
+        android:background="@drawable/comidaperros"
         android:onClick="liberarComida"
-        android:text="Alimentar"
+        android:text="Poner"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.119"
+        app:layout_constraintHorizontal_bias="0.242"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cantidadComidaPonerse"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.241" />
 
     <TextView
         android:id="@+id/cantidadComidaPonerse"
