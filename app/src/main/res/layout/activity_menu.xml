@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonActAgua"
         android:layout_width="159dp"
         android:layout_height="150dp"
         android:layout_marginBottom="8dp"
@@ -55,13 +55,14 @@
         android:layout_marginStart="8dp"
         android:background="@drawable/obturador"
         android:text="Camara"
+        android:onClick="irACamara"
         android:textColor="@android:color/background_light"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/button2" />
+        app:layout_constraintStart_toEndOf="@+id/buttonActAgua" />
 
     <Button
         android:id="@+id/buttonActLuz"
@@ -70,11 +71,13 @@
         android:layout_marginBottom="8dp"
         android:layout_marginTop="8dp"
         android:background="@drawable/apagado"
-        android:text="Button"
+        android:text="LUZ"
+        android:onClick="irALuz"
         app:layout_constraintBottom_toTopOf="@+id/buttonActCamara"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        tools:layout_editor_absoluteX="204dp" />
+        tools:layout_editor_absoluteX="204dp"
+        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -92,6 +95,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.981"
-        app:srcCompat="@drawable/ajustes" />
+        app:srcCompat="@drawable/ajustes"
+        android:onClick="irAPersonalizacion"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -35,4 +35,19 @@ public class MenuActivity extends AppCompatActivity {
             leerEscribirArchivos.escribirArchivo(configurationPorDefecto,"configuration.bin");
         }
     }
+
+    public void irALuz(View view){
+        Intent intent = new Intent(getApplicationContext(), LuzActivity.class);
+        startActivity(intent);
+    }
+
+    public void irACamara(View view){
+        Intent intent = new Intent(getApplicationContext(), CamaraActivity.class);
+        startActivity(intent);
+    }
+
+    public void irAPersonalizacion(View view){
+        Intent intent = new Intent(getApplicationContext(), PersonalizacionActivity.class);
+        startActivity(intent);
+    }
 }
