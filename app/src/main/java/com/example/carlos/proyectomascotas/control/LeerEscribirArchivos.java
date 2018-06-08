@@ -49,13 +49,14 @@ public class LeerEscribirArchivos {
         return p;
     }
 
-//    public  String obtenerURL(){
-//        if(){
-//
-//        }else{
-//            return ""
-//        }
-//    }
+    public  String obtenerURL(){
+        Configuration configuration=leerArchivo("configuration.bin");
+        if(configuration.getUrl()!=""){
+            return  configuration.getUrl();
+        }else{
+            return "no URL";
+        }
+    }
 }
 
 
