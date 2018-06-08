@@ -31,10 +31,10 @@ public class LuzActivity extends AppCompatActivity {
                 //datos quemados cambiar
                 if(txtEstadoIluminacion.getText()=="apagado"){
                     txtEstadoIluminacion.setText("encendido");
-                    btnEncenderApagar.setBackgroundResource(R.drawable.apagado);
+                    btnEncenderApagar.setBackgroundResource(R.drawable.focoencendido);
                 }else{
                     txtEstadoIluminacion.setText("apagado");
-                    btnEncenderApagar.setBackgroundResource(R.drawable.bombillapagada);
+                    btnEncenderApagar.setBackgroundResource(R.drawable.focoapagado);
                 }
             }
         });
