@@ -16,6 +16,9 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.StringTokenizer;
+
+import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
+import com.example.carlos.proyectomascotas.modelo.Configuration;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
@@ -103,7 +106,6 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                                 // dialogo
                                 requestPermissions(new String[]{Manifest.permission.CAMERA},REQUESTCAMERA);
 
-
                                 solicitarPermiso();
                             }
                         }
@@ -127,10 +129,15 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         Log.e("resultQR",result.getBarcodeFormat().toString());
 
         /***********lo que se debe hacer capturado el QR************/
-        
+        LeerEscribirArchivos leerEscribirArchivos=new LeerEscribirArchivos();
+        Configuration configurationActual=leerEscribirArchivos.leerArchivo("configuration.bin");
 
-
-
+        if(configurationActual.getUrl()==result.getText()){
+            crearDialogoAlert();
+        }else{
+            configurationActual.setUrl(result.getText());
+            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
+        }
     }
 
     public void crearDialogoAlert(){
