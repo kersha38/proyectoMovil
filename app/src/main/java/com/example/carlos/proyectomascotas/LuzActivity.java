@@ -1,5 +1,6 @@
 package com.example.carlos.proyectomascotas;
 
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,10 +29,13 @@ public class LuzActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_LONG).show();
 
                 //datos quemados cambiar
-                if(txtEstadoIluminacion.getText()=="apagado")
+                if(txtEstadoIluminacion.getText()=="apagado"){
                     txtEstadoIluminacion.setText("encendido");
-                else
+                    btnEncenderApagar.setBackgroundResource(R.drawable.apagado);
+                }else{
                     txtEstadoIluminacion.setText("apagado");
+                    btnEncenderApagar.setBackgroundResource(R.drawable.bombillapagada);
+                }
             }
         });
     }

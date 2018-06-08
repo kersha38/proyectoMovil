@@ -35,6 +35,7 @@ public class PersonalizacionActivity extends AppCompatActivity {
                 configuration.setCantidadAgua(Double.parseDouble(txtRacionAgua.getText().toString()));
                 configuration.setCantidadComida(Double.parseDouble(txtRacionAlimento.getText().toString()));
                 leerEscribirArchivos.escribirArchivo(configuration,"configuration.bin");
+                finish();
             }
         });
     }
