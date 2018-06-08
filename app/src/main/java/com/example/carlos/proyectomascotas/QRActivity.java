@@ -137,6 +137,8 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         }else{
             configurationActual.setUrl(result.getText());
             leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
+            Toast.makeText(getApplicationContext(),"Url registrada",Toast.LENGTH_SHORT);
+            finish();
         }
     }
 
