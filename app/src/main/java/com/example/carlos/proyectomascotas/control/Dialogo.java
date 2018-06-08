@@ -198,7 +198,6 @@ public class Dialogo {
                 }
             }
         });
-
         dialogoAlerta.setCancelable(true);
         dialogoAlerta.create();
         dialogoAlerta.show();
