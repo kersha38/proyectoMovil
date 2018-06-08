@@ -1,5 +1,8 @@
 package com.example.carlos.proyectomascotas;
 
+import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -48,7 +51,49 @@ public class ComidaActivity extends AppCompatActivity {
 
     public void liberarComida(View view){
         //configuracion raspberry liberar cant comida gr.
-        Toast.makeText(getApplicationContext(),"Dispensador con comida", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),"Dispensador con comida", Toast.LENGTH_SHORT).show();
+        crearDialogoAlert();
+    }
+
+    public void crearDialogoAlert(){
+        // Builder para crear la alerta
+        // this = getaplicationcontext
+        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(getApplicationContext());
+        dialogoAlerta.setTitle("ALERTA DE ALIMENTACION");
+        dialogoAlerta.setMessage("¿Esta seguro de poner comida?");
+
+        // interface para el boton Positive
+        dialogoAlerta.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //lo q sucede al dar clic
+                Toast.makeText(getApplicationContext(),"Comida Liberada",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // interface para el boton Negative
+        dialogoAlerta.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //lo q sucede al dar clic
+                //Toast.makeText(getApplicationContext(),"N",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // interface para el boton Neutral
+        dialogoAlerta.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //lo q sucede al dar clic
+                //Toast.makeText(getApplicationContext(),"Selecciono Neutral",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        // cancelar sin aplastar un boton
+        dialogoAlerta.setCancelable(true);
+
+        dialogoAlerta.create();
+        dialogoAlerta.show();
     }
 
 }
