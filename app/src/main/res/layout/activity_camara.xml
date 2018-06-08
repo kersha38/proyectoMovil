@@ -6,4 +6,58 @@
     android:layout_height="match_parent"
     tools:context=".CamaraActivity">
 
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="364dp"
+        android:layout_height="311dp"
+        android:layout_marginBottom="64dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/switch1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Switch
+        android:id="@+id/switch1"
+        android:layout_width="241dp"
+        android:layout_height="61dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="Activar/ Desactivar \nMicrofono"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Video Stream"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/videoView"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="55dp"
+        android:layout_height="118dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/grabadoradevoz" />
 </android.support.constraint.ConstraintLayout>
