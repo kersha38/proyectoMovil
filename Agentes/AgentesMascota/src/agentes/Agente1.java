@@ -1,7 +1,6 @@
 package agentes;
 
-import redNeuronal.RedNeuronal;
-import misionerosyCanibales.ArbolMisionero;
+
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -30,16 +29,10 @@ public class Agente1 extends Agent{
 		public void action() {
 			// TODO Auto-generated method stub
 			ACLMessage mensaje = new ACLMessage(ACLMessage.INFORM);
-			
-			//agente1 sin Heuristica
-			//ArbolMisionero misionerosyCanibales = new ArbolMisionero();
-			//misionerosyCanibales.solucionarSinHeuristica();
-			//int cantidadNodos = misionerosyCanibales.getContNodos();
-			RedNeuronal red= new RedNeuronal();
-			//red.prediccion();
+	
 			
 			System.out.println("Prediccion co RED NEURONAAL...");
-			enviarMensaje("Agente4", mensaje, red, "convIDAgente1-4" );
+			//enviarMensaje("Agente4", mensaje, red, "convIDAgente1-4" );
 			getAgent().blockingReceive(1);
 			
 			getAgent().doDelete();

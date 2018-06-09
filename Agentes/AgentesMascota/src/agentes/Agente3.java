@@ -1,8 +1,6 @@
 package agentes;
 
 import javax.swing.JOptionPane;
-
-import misionerosyCanibales.ArbolMisionero;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -33,7 +31,7 @@ public class Agente3 extends Agent{
 			// TODO Auto-generated method stub
 			ACLMessage mensaje = getAgent().blockingReceive();
 			String contenido = "";
-			ArbolMisionero misionerosyCanibales = null;
+			//ArbolMisionero misionerosyCanibales = null;
 			blockingReceive(1);
 			
 			if(mensaje.getConversationId().equals("convIDAgente4-3")){
@@ -42,15 +40,15 @@ public class Agente3 extends Agent{
 				
 				//System.out.println(mensaje.toString());
 				System.out.println("Recibi mejor arbol");
-				try {
-					misionerosyCanibales = (ArbolMisionero) mensaje.getContentObject();
-				} catch (Exception e) {
+				//try {
+					//misionerosyCanibales = (ArbolMisionero) mensaje.getContentObject();
+				//} catch (Exception e) {
 					// TODO: handle exception
-				}
+				//}
 				mensaje = new ACLMessage( ACLMessage.INFORM);
 				//ACLMessage respuesta = new ACLMessage( ACLMessage.INFORM);
 				enviarMensaje("Agente4", mensaje, "Usuario informado de mejor camino Heuristico..!", "convIDAgente3");
-				misionerosyCanibales.imprimirSolucionConHeur();
+				
 				//JOptionPane.showMessageDialog(null, misionerosyCanibales.imprimirSolucionConHeur());
 				
 				

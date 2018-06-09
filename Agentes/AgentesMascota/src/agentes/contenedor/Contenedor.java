@@ -1,4 +1,4 @@
-package contenedor;
+package agentes.contenedor;
 
 import agentes.Agente1;
 import agentes.Agente2;

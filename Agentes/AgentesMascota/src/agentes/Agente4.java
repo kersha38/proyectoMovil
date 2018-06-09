@@ -1,8 +1,5 @@
 package agentes;
 
-import openmarkov.RedBayesina;
-import redNeuronal.RedNeuronal;
-import misionerosyCanibales.ArbolMisionero;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -31,8 +28,7 @@ public class Agente4 extends Agent{
 		
 		String contenidoAg1="";
 		String contenidoAg2="";
-		RedNeuronal redNeuronal = null;
-		RedBayesina redBayesiana = null;
+
 		double[] prediccion=new double[1];
 		double[] probabilidad=new double[2];
 		
@@ -45,14 +41,7 @@ public class Agente4 extends Agent{
 			ACLMessage mensaje = getAgent().blockingReceive();
 			
 			if(mensaje.getConversationId().equals("convIDAgente1-4")){
-				try {
-					redNeuronal = (RedNeuronal) mensaje.getContentObject();
-					redNeuronal.prediccion();
-					prediccion = redNeuronal.getPrediccion();
-					
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
+
 				//contenidoAg1 = mensaje.getContent();
 				//System.out.println(contenidoAg1 + " : " + mensaje.getConversationId());
 				System.out.println(mensaje.toString());
@@ -67,13 +56,6 @@ public class Agente4 extends Agent{
 			//ACLMessage mensaje2 = getAgent().blockingReceive();
 			
 			if(mensaje.getConversationId().equals("convIDAgente2-4")){
-				try {
-					redBayesiana = (RedBayesina) mensaje.getContentObject();
-					probabilidad = redBayesiana.red();
-					System.out.println("su probabilidad de pasar es: "+probabilidad[0]+","+probabilidad[1]);
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
 				
 			}
 			//mensaje2.getConversationId().e

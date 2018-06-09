@@ -1,7 +1,5 @@
 package agentes;
 
-import openmarkov.RedBayesina;
-import misionerosyCanibales.ArbolMisionero;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
@@ -38,12 +36,12 @@ public class Agente2 extends Agent{
 			//ArbolMisionero misionerosyCanibales = new ArbolMisionero();
 			//misionerosyCanibales.solucionarConHeuristica();
 			//int cantidadNodos = misionerosyCanibales.getContNodos();
-			RedBayesina red = new RedBayesina();
+			
 			
 			//red.red();
 			
 			System.out.println("Probabilidad cpn RED BAYESIANA...");
-			enviarMensaje("Agente4", mensaje, red, "convIDAgente2-4" );
+			//enviarMensaje("Agente4", mensaje, red, "convIDAgente2-4" );
 			getAgent().blockingReceive(1);
 			
 			getAgent().doDelete();
