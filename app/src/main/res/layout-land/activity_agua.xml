@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -81,33 +81,33 @@
             android:layout_weight="1"
             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/ultimaPuestaAguaFecha"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:gravity="left|top"
-            android:paddingLeft="25dp"
-            android:text="5 mayo"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@+id/ultimaPuestaAguaHora"
-            app:layout_constraintHorizontal_bias="0.444"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            <TextView
+                android:id="@+id/ultimaPuestaAguaFecha"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:gravity="left|top"
+                android:paddingLeft="25dp"
+                android:text="5 mayo"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/ultimaPuestaAguaHora"
+                app:layout_constraintHorizontal_bias="0.444"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-        <TextView
-            android:id="@+id/ultimaPuestaAguaHora"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_gravity="left"
-            android:layout_weight="1"
-            android:gravity="left|top"
-            android:paddingLeft="25dp"
-            android:text="5 pm"
-            android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView6" />
+            <TextView
+                android:id="@+id/ultimaPuestaAguaHora"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="left"
+                android:layout_weight="1"
+                android:gravity="left|top"
+                android:paddingLeft="25dp"
+                android:text="5 pm"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         </LinearLayout>
         <TextView
@@ -189,4 +189,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

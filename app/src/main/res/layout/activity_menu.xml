@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="6"
     tools:context=".MenuActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center">
 
         <TextView
@@ -20,7 +22,7 @@
             android:text="Menú"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-            android:textSize="26sp"
+            android:textSize="30sp"
             android:textStyle="bold"
             app:fontFamily="casual"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -33,19 +35,22 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:gravity="center">
+        android:layout_height="160dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:padding="25dp">
 
         <Button
             android:id="@+id/buttonActComida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/mascotas"
             android:gravity="center"
             android:onClick="irAComida"
@@ -57,14 +62,15 @@
 
         <Button
             android:id="@+id/buttonActAgua"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/agua"
             android:gravity="center"
             android:onClick="irAAgua"
@@ -81,19 +87,22 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:gravity="center">
+        android:layout_height="160dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:padding="25dp">
 
         <Button
             android:id="@+id/buttonActLuz"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/apagado"
             android:onClick="irALuz"
             android:text="LUZ"
@@ -107,14 +116,15 @@
 
         <Button
             android:id="@+id/buttonActCamara"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:layout_marginBottom="25dp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_weight="1"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:background="@drawable/obturador"
             android:onClick="irACamara"
             android:text="Camara"
@@ -131,32 +141,34 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="80dp"
+        android:layout_weight="1"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:onClick="irAPersonalizacion"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.026"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.981"
-            app:srcCompat="@drawable/ajustes"
-            android:onClick="irAPersonalizacion"/>
+            app:srcCompat="@drawable/ajustes" />
 
         <Button
             android:id="@+id/buttonQR"
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
@@ -164,8 +176,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/qr"
-            android:text="QR"
             android:onClick="irAQr"
+            android:text="QR"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.973"
@@ -174,7 +186,6 @@
             app:layout_constraintVertical_bias="0.981" />
 
     </LinearLayout>
-
 
 
     <!--/RelativeLayout-->
