@@ -5,7 +5,7 @@ import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.util.leap.Serializable;
-import agentes.Agente1.Comportamiento;
+//import agentes.Agente4.Comportamiento;
 
 public class Agente4 extends Agent{
 	
