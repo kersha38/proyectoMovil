@@ -48,33 +48,54 @@
 
         </LinearLayout>
 
-        <Switch
-            android:id="@+id/switchLuz"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_gravity="clip_horizontal"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="Luz"
-            android:textOff="OFF"
-            android:textOn="ON"
-            android:textSize="18sp" />
+            android:orientation="horizontal"
+            android:paddingLeft="100dp">
 
-        <ImageView
-            android:id="@+id/imageEncenderApagar"
-            android:layout_width="150dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center"
-            android:layout_weight="3"
-            android:background="@drawable/focoapagado"
-            android:padding="25dp"
-            android:paddingVertical="25dp"
-            android:text="Encender"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Switch
+                android:id="@+id/switchLuz"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:gravity="right|center"
+                android:padding="25dp"
+                android:text="Luz"
+                android:textOff="OFF"
+                android:textOn="ON"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/imageEncenderApagar"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/focoapagado"
+                android:gravity="right|center"
+                android:paddingVertical="25dp"
+                android:text="Encender"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.503"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
 
 
     </LinearLayout>

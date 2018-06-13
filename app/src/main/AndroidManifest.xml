@@ -12,23 +12,23 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="CaLuPet Sense"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MenuActivity">
-            <intent-filter>
+            <intent-filter android:label="CaLuPet Sense">
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ComidaActivity" />
-        <activity android:name=".AguaActivity" />
-        <activity android:name=".LuzActivity" />
-        <activity android:name=".PersonalizacionActivity" />
-        <activity android:name=".CamaraActivity" />
-        <activity android:name=".QRActivity"></activity>
+        <activity android:name=".ComidaActivity" android:label="Alimentación"/>
+        <activity android:name=".AguaActivity" android:label="Hidratación"/>
+        <activity android:name=".LuzActivity" android:label="Iluminación"/>
+        <activity android:name=".PersonalizacionActivity" android:label="Configuración"/>
+        <activity android:name=".CamaraActivity" android:label="Video Stream"/>
+        <activity android:name=".QRActivity" android:label="Sync Raspberry"></activity>
     </application>
 
 </manifest>
