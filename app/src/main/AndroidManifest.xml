@@ -37,7 +37,14 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MenuActivity" android:label="CaLuPet Sense"/>
+        <activity android:name=".MenuActivity">
+            <intent-filter android:label="CaLuPet Sense">
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
 
         <activity
             android:name=".ComidaActivity"
@@ -57,13 +64,7 @@
         <activity
             android:name=".QRActivity"
             android:label="Sync Raspberry" />
-        <activity android:name=".LoginActivity" >
-        <intent-filter android:label="CaLuPet Sense">
-            <action android:name="android.intent.action.MAIN" />
-
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
+        <activity android:name=".LoginActivity" />
         <activity android:name=".RegistryActivity" />
         <activity android:name=".RegistrarMacActivity"></activity>
     </application>

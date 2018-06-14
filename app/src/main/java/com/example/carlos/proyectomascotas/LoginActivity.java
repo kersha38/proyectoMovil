@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     // variables para logueo de gmail
     private GoogleApiClient googleApiClient;
     private final int CODEgoogle =9001;
-    private final int CODEfacebook = 9002;
+    private int CODEfacebook;
 
     //varaibles fb
     private CallbackManager callbackManager;
@@ -46,7 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         //facebook
         callbackManager = CallbackManager.Factory.create();
         /***************************FACEBOOK*******************/
-        FacebookSdk.sdkInitialize(getApplicationContext(),CODEfacebook);
+        CODEfacebook=FacebookSdk.getCallbackRequestCodeOffset();
+        FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
 
 
@@ -79,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        Log.e("facebbok result",loginResult.getAccessToken().toString());
+                        Log.e("facebbok result",loginResult.getAccessToken().getPermissions().toString());
                     }
 
                     @Override
@@ -136,9 +137,9 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intentPrincipal);
             }
         }else if(requestCode==CODEfacebook){
+
             // metodo de  result en fb
             callbackManager.onActivityResult(requestCode, resultCode, data);
-
 
 //            //recupero sesion
 //            AccessToken accessToken = AccessToken.getCurrentAccessToken();

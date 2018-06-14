@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class RegistrarMacActivity extends AppCompatActivity {
     Button btnRegQR;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
