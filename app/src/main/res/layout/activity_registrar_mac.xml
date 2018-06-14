@@ -33,7 +33,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="para continuar \n es necesario registar un codigo QR\n clic en el boton para continuar"
+        android:text="Para continuar \n es necesario registar un codigo QR\n clic en el boton para continuar"
         android:textAppearance="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

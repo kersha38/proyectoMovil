@@ -5,7 +5,7 @@ export class RaspeberryService {
     ordenActual:Orden;
 
     ordenToJSON(){
-        return const ordenJSON={type:this.ordenActual.type,target:this.ordenActual.target}
+        //return const ordenJSON={type:this.ordenActual.type,target:this.ordenActual.target}
     }
 
     eliminarOrden(){

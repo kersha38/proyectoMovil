@@ -20,11 +20,11 @@
         app:layout_constraintBottom_toTopOf="@+id/googlebutton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRegistroNormal" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/googlebutton"
-        android:layout_width="266dp"
+        android:layout_width="177dp"
         android:layout_height="55dp"
         android:layout_marginBottom="96dp"
         android:layout_marginEnd="8dp"
@@ -34,9 +34,10 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.946"></com.google.android.gms.common.SignInButton>
+        app:layout_constraintVertical_bias="1.0"></com.google.android.gms.common.SignInButton>
 
     <TextView
         android:id="@+id/textView"
@@ -48,12 +49,45 @@
         android:layout_marginRight="6dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Login"
+        android:text="CaluPet Sense\n   Bienvenido"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/googlebutton"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Registrador eventos" />
+        app:layout_constraintVertical_bias="0.231" />
+
+    <Button
+        android:id="@+id/buttonMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:onClick="irAMenuPrincipal"
+        android:text="INGRESAR"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <Button
+        android:id="@+id/buttonRegistroNormal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:text="Registro"
+        android:onClick="registrarUsuario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonMenu" />
 
 </android.support.constraint.ConstraintLayout>

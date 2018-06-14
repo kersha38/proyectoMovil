@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
                     public void onSuccess(LoginResult loginResult) {
                         // App code
                         Log.e("facebbok result",loginResult.getAccessToken().getPermissions().toString());
+                        Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
+                        startActivity(intentPrincipal);
                     }
 
                     @Override
@@ -148,5 +150,15 @@ public class LoginActivity extends AppCompatActivity {
 //            //reinicio sesion
 //            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         }
+    }
+
+    public void irAMenuPrincipal(View view){
+        Intent intent = new Intent(getApplicationContext(), RegistrarMacActivity.class);
+        startActivity(intent);
+    }
+
+    public void registrarUsuario(View view){
+        Intent intent =new Intent(getApplicationContext(), RegistryActivity.class);
+        startActivity(intent);
     }
 }

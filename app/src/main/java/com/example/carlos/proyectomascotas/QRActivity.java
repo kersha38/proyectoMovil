@@ -3,6 +3,7 @@ package com.example.carlos.proyectomascotas;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.os.Build;
@@ -138,6 +139,8 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
             configurationActual.setUrl(result.getText());
             leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
             Toast.makeText(getApplicationContext(),"Url registrada",Toast.LENGTH_SHORT);
+            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+            startActivity(intent);
             finish();
         }
     }

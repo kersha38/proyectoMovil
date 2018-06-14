@@ -42,8 +42,9 @@ public class RegistryActivity extends AppCompatActivity {
 //                                    txtMail.getText().toString()),
 //                            "registrados.bin");
                     Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_LONG).show();
-                    Intent intentLogin=new Intent(getApplicationContext(),LoginActivity.class);
-                    startActivity(intentLogin);
+//                    Intent intentLogin=new Intent(getApplicationContext(),RegistrarMacActivity.class);
+//                    startActivity(intentLogin);
+                    finish();
                 }else{
                     Toast.makeText(getApplicationContext(),"Erro Registrando",Toast.LENGTH_LONG).show();
                 }
