@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
@@ -16,19 +17,55 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MenuActivity">
-            <intent-filter android:label="CaLuPet Sense">
-                <action android:name="android.intent.action.MAIN" />
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".ComidaActivity" android:label="Alimentación"/>
-        <activity android:name=".AguaActivity" android:label="Hidratación"/>
-        <activity android:name=".LuzActivity" android:label="Iluminación"/>
-        <activity android:name=".PersonalizacionActivity" android:label="Configuración"/>
-        <activity android:name=".CamaraActivity" android:label="Video Stream"/>
-        <activity android:name=".QRActivity" android:label="Sync Raspberry"></activity>
+        <activity android:name=".MenuActivity" android:label="CaLuPet Sense"/>
+
+        <activity
+            android:name=".ComidaActivity"
+            android:label="Alimentación" />
+        <activity
+            android:name=".AguaActivity"
+            android:label="Hidratación" />
+        <activity
+            android:name=".LuzActivity"
+            android:label="Iluminación" />
+        <activity
+            android:name=".PersonalizacionActivity"
+            android:label="Configuración" />
+        <activity
+            android:name=".CamaraActivity"
+            android:label="Video Stream" />
+        <activity
+            android:name=".QRActivity"
+            android:label="Sync Raspberry" />
+        <activity android:name=".LoginActivity" >
+        <intent-filter android:label="CaLuPet Sense">
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity android:name=".RegistryActivity" />
+        <activity android:name=".RegistrarMacActivity"></activity>
     </application>
 
 </manifest>
