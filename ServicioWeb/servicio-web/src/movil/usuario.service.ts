@@ -6,37 +6,50 @@ const fs = require('fs');
 export class UsuarioService {
     listaUsuarios: Usuario[] = [];
 
-    cargarDatos() {
-        const contenido=fs.readFileSync(__dirname + '/archivo/usuarios.json',
-            'utf8');
+    listarUsuarios() {
+        let users = []
+        users = JSON.parse(fs.readFileSync(__dirname + '/archivos/usuarios.json', 'utf8'));
         //cargar usuarios desde un archivo
+        users.forEach(usuario => this.listaUsuarios.push(usuario));
+        console.log(users);
+        console.log(this.listaUsuarios);
+
     }
 
-    añadirUsuario(nombre,correo,password){
-        const usuario= new Usuario(nombre,password,"",correo);
+    añadirUsuario(nombre, correo, password) {
+        const usuario = new Usuario(nombre, password, "", correo);
         this.listaUsuarios.push(usuario);
         // escribir usuario en file
-
+        fs.writeFile(
+            __dirname + '/archivos/usuarios.json',
+            JSON.stringify(this.listarUsuarios(), null, 4), (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("JsonUsuarios creado");
+            });
+        return this.listarUsuarios();
     }
 
-    añadirUsuarioGmail(nombre,correo){
-        const usuario= new Usuario(nombre,"","",correo);
+    añadirUsuarioGmail(nombre, correo) {
+        const usuario = new Usuario(nombre, "", "", correo);
         this.listaUsuarios.push(usuario);
         // escribir usuario en file
     }
 
-    asignarQR(usuario,mac){
+    asignarQR(usuario, mac) {
         //this.listaUsuarios.find();
         //encuentro usuario, cambio su mac y guardo
 
     }
 
-    verificarUsuario(nombre,password):boolean{
+    verificarUsuario(nombre, password): boolean {
         //verifico existe usuario con nombre y password
         return false
     }
 
-    verificarUsuarioGmail(nombre,gmail):boolean{
+    verificarUsuarioGmail(nombre, gmail): boolean {
         //lo mismo
         return false
 
