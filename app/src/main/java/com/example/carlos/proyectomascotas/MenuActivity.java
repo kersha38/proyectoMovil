@@ -47,7 +47,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void irAQr(View view){
-        Intent intent = new Intent(getApplicationContext(), QRActivity.class);
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);
     }
 
