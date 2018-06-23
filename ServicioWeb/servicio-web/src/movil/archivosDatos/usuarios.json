@@ -19,5 +19,12 @@
         "mail": "kersha@gmail.com",
         "ipRasp": "192.168.5.30",
         "necesitaPassword": "si"
+    },
+    {
+        "nickname": "Boby",
+        "mail": "boby@hotmail.com",
+        "password": "123",
+        "necesitaPassword": "si",
+        "ipRasp": ""
     }
 ]

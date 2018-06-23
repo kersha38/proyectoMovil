@@ -11,29 +11,34 @@ export class UsuarioController {
 
     @Post('autentificarComun')
     autentificarComun(@Body('nickname') nickname,@Body('password') password){
-        this._usuarioService.autentificarComun(nickname,password);
+        return this._usuarioService.autentificarComun(nickname,password);
     }
 
     @Post('autentificarGmailFb')
     autentificarGmailFb(@Body('mail') mail){
-        this._usuarioService.autentificarGmailFb(mail);
+        return this._usuarioService.autentificarGmailFb(mail);
+    }
+
+    @Post()
+    existeGmailFb(@Body('mail') mail){
+        return this._usuarioService.existeGmailFb(mail);
     }
 
     @Post('crearComun')
     crearComun(
         @Body('nickname') nickname,
-        @Body('correo') correo,
+        @Body('mail') mail,
         @Body('password') password
     ) {
-        return this._usuarioService.crearUsuarioComun(nickname, correo, password);
+        return this._usuarioService.crearUsuarioComun(nickname, mail, password);
     }
 
     @Post('crearConGmailFb')
     crearConGmailFb(
         @Body('nickname') nickname,
-        @Body('correo') correo,
+        @Body('mail') mail,
     ) {
-        return this._usuarioService.crearConGmailFb(nickname, correo);
+        return this._usuarioService.crearConGmailFb(nickname, mail);
     }
 
     @Get('listar')

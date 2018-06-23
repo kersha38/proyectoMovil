@@ -10,7 +10,7 @@ export class UsuarioService {
         console.log("nickBusqueda: "+nickname);
         var usuarioBuscado:any;
         this.users.forEach((usuario)=>{
-            console.log(usuario.nickname)
+            //console.log(usuario.nickname)
             if (usuario.nickname == nickname){
 
                 usuarioBuscado=usuario;
@@ -31,22 +31,43 @@ export class UsuarioService {
     }
 
     crearUsuarioComun(nickname, correo, password) {
-        const usuario={"nickname":nickname,"mail":correo,"password":password,"necesitaPassword":"si","ipRasp":""};
-        this.users.push(usuario);
-        fs.writeFile(
-            __dirname + '/archivosDatos/usuarios.json',
-            JSON.stringify(this.users, null, 4), (err) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                console.log("JsonUsuarios creado");
-            });
-        return this.users;
+        var nicknameDisponible= true;
+        this.users.forEach((usuario)=>{
+            if(usuario.nickname == nickname){
+                nicknameDisponible=false;
+            }
+        });
+        if(nicknameDisponible){
+            const usuario={"nickname":nickname,"mail":correo,"password":password,"necesitaPassword":"si","ipRasp":""};
+            this.users.push(usuario);
+            fs.writeFile(
+                __dirname + '/archivosDatos/usuarios.json',
+                JSON.stringify(this.users, null, 4), (err) => {
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                    console.log("JsonUsuarios creado");
+                });
+            return this.users;
+        }else{
+            return "nickname ya fue ocupado"
+        }
     }
 
-    crearConGmailFb(nickname, correo) {
-        const usuario={"nickname":nickname,"mail":correo,"password":"","necesitaPassword":"no","ipRasp":""};
+    existeGmailFb(mail){
+        var existeCuenta= false;
+        this.users.forEach((usuario)=>{
+            if(usuario.mail == mail){
+                existeCuenta=true;
+            }
+        });
+
+        return existeCuenta;
+    }
+
+    crearConGmailFb(nickname, mail) {
+        const usuario={"nickname":nickname,"mail":mail,"password":"","necesitaPassword":"no","ipRasp":""};
         this.users.push(usuario);
         fs.writeFile(
             __dirname + '/archivosDatos/usuarios.json',
@@ -64,7 +85,7 @@ export class UsuarioService {
         //devuelve undefined si no encuentra
         var usuarioBuscado:any;
         this.users.forEach((usuario)=>{
-            console.log(usuario.nickname)
+            //console.log(usuario.nickname)
             if (usuario.nickname == nickname && usuario.password==password && usuario.necesitaPassword=="si"){
 
                 usuarioBuscado=usuario;
@@ -76,7 +97,7 @@ export class UsuarioService {
     autentificarGmailFb(mail){
         var usuarioBuscado:any;
         this.users.forEach((usuario)=>{
-            console.log(usuario.nickname)
+            //console.log(usuario.nickname)
             if (usuario.mail == mail && usuario.necesitaPassword=="no"){
 
                 usuarioBuscado=usuario;
