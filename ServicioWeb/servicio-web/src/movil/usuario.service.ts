@@ -30,15 +30,15 @@ export class UsuarioService {
 
     }
 
-    crearUsuarioComun(nickname, correo, password) {
-        var nicknameDisponible= true;
+    crearUsuarioComun(nickname, mail, password) {
+        var mailDisponible= true;
         this.users.forEach((usuario)=>{
-            if(usuario.nickname == nickname){
-                nicknameDisponible=false;
+            if(usuario.mail == mail && usuario.necesitaPassword == "si"){
+                mailDisponible=false;
             }
         });
-        if(nicknameDisponible){
-            const usuario={"nickname":nickname,"mail":correo,"password":password,"necesitaPassword":"si","ipRasp":""};
+        if(mailDisponible){
+            const usuario={"nickname":nickname,"mail":mail,"password":password,"necesitaPassword":"si","ipRasp":""};
             this.users.push(usuario);
             fs.writeFile(
                 __dirname + '/archivosDatos/usuarios.json',
@@ -104,5 +104,20 @@ export class UsuarioService {
             }
         });
         return usuarioBuscado;
+    }
+
+    registrarRaspberry(raspberry,mail){
+        var usuarioBuscado:any;
+        this.users.forEach((usuario,numeroUsuario)=>{
+            //console.log(usuario.nickname)
+            if (usuario.mail == mail){
+
+                usuarioBuscado=usuario;
+                usuarioBuscado.ipRasp=raspberry;
+                this.users[numeroUsuario]=usuarioBuscado;
+            }
+        });
+        return usuarioBuscado;
+
     }
 }

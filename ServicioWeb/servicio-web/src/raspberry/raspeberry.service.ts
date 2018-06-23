@@ -2,21 +2,29 @@ import {Injectable} from "@nestjs/common";
 
 @Injectable()
 export class RaspeberryService {
-    ordenActual:Orden;
+    ordenes:any={};
+    sensados:any={};
 
-    ordenToJSON(){
-        //return const ordenJSON={type:this.ordenActual.type,target:this.ordenActual.target}
+    añadirOrden(raspberry,tipo){
+        this.ordenes[raspberry].tipo=tipo;
+
+        return this.ordenes[raspberry];
     }
 
-    eliminarOrden(){
-
+    obtenerOrden(raspberry){
+        const orden= this.ordenes[raspberry];
+        delete this.ordenes[raspberry];
+        return orden;
     }
 
 
-}
-
-export class Orden{
-    constructor(public type,public target){
-
+    consultarSenso(raspberry){
+        return this.sensados[raspberry];
     }
+
+    actualizarSenso(raspberry,estado){
+        this.sensados[raspberry].estado=estado;
+        return this.sensados[raspberry];
+    }
+
 }

@@ -50,4 +50,9 @@ export class UsuarioController {
     obtenerUsuario(@Body('nickname') nickname) {
         return this._usuarioService.obtenerUsuario(nickname);
     }
+
+    @Post('registrarRaspberry')
+    registrarRaspberry(@Body('raspberry') raspberry,@Body('nickname') nickname){
+        return this._usuarioService.registrarRaspberry(raspberry,nickname);
+    }
 }
