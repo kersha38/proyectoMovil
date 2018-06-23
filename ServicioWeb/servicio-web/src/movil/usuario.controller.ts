@@ -19,7 +19,7 @@ export class UsuarioController {
         return this._usuarioService.autentificarGmailFb(mail);
     }
 
-    @Post()
+    @Post('existeGmailFb')
     existeGmailFb(@Body('mail') mail){
         return this._usuarioService.existeGmailFb(mail);
     }
