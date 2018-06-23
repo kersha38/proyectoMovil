@@ -4,63 +4,84 @@ const fs = require('fs');
 
 @Injectable()
 export class UsuarioService {
-    listaUsuarios: Usuario[] = [];
+    private users: any[];
+
+    obtenerUsuario(nickname){
+        console.log("nickBusqueda: "+nickname);
+        var usuarioBuscado:any;
+        this.users.forEach((usuario)=>{
+            console.log(usuario.nickname)
+            if (usuario.nickname == nickname){
+
+                usuarioBuscado=usuario;
+
+            }
+        });
+        return usuarioBuscado;
+    }
 
     listarUsuarios() {
-        let users = []
-        users = JSON.parse(fs.readFileSync(__dirname + '/archivos/usuarios.json', 'utf8'));
+         this.users = JSON.parse(fs.readFileSync(__dirname + '/archivosDatos/usuarios.json', 'utf8'));
         //cargar usuarios desde un archivo
-        users.forEach(usuario => this.listaUsuarios.push(usuario));
-        console.log(users);
-        console.log(this.listaUsuarios);
+        //users.forEach(usuario => this.listaUsuarios.push(usuario));
+        console.log(this.users);
+        //console.log(this.listaUsuarios);
+        return this.users;
 
     }
 
-    añadirUsuario(nombre, correo, password) {
-        const usuario = new Usuario(nombre, password, "", correo);
-        this.listaUsuarios.push(usuario);
-        // escribir usuario en file
+    crearUsuarioComun(nickname, correo, password) {
+        const usuario={"nickname":nickname,"mail":correo,"password":password,"necesitaPassword":"si","ipRasp":""};
+        this.users.push(usuario);
         fs.writeFile(
-            __dirname + '/archivos/usuarios.json',
-            JSON.stringify(this.listarUsuarios(), null, 4), (err) => {
+            __dirname + '/archivosDatos/usuarios.json',
+            JSON.stringify(this.users, null, 4), (err) => {
                 if (err) {
                     console.error(err);
                     return;
                 }
                 console.log("JsonUsuarios creado");
             });
-        return this.listarUsuarios();
+        return this.users;
     }
 
-    añadirUsuarioGmail(nombre, correo) {
-        const usuario = new Usuario(nombre, "", "", correo);
-        this.listaUsuarios.push(usuario);
-        // escribir usuario en file
+    crearConGmailFb(nickname, correo) {
+        const usuario={"nickname":nickname,"mail":correo,"password":"","necesitaPassword":"no","ipRasp":""};
+        this.users.push(usuario);
+        fs.writeFile(
+            __dirname + '/archivosDatos/usuarios.json',
+            JSON.stringify(this.users, null, 4), (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("JsonUsuarios creado");
+            });
+        return this.users;
     }
 
-    asignarQR(usuario, mac) {
-        //this.listaUsuarios.find();
-        //encuentro usuario, cambio su mac y guardo
+    autentificarComun(nickname,password){
+        //devuelve undefined si no encuentra
+        var usuarioBuscado:any;
+        this.users.forEach((usuario)=>{
+            console.log(usuario.nickname)
+            if (usuario.nickname == nickname && usuario.password==password && usuario.necesitaPassword=="si"){
 
+                usuarioBuscado=usuario;
+            }
+        });
+        return usuarioBuscado;
     }
 
-    verificarUsuario(nombre, password): boolean {
-        //verifico existe usuario con nombre y password
-        return false
-    }
+    autentificarGmailFb(mail){
+        var usuarioBuscado:any;
+        this.users.forEach((usuario)=>{
+            console.log(usuario.nickname)
+            if (usuario.mail == mail && usuario.necesitaPassword=="no"){
 
-    verificarUsuarioGmail(nombre, gmail): boolean {
-        //lo mismo
-        return false
-
-    }
-
-}
-
-export class Usuario {
-    constructor(public nombre: string,
-                public password: string,
-                public mac: string,
-                public correo: string) {
+                usuarioBuscado=usuario;
+            }
+        });
+        return usuarioBuscado;
     }
 }

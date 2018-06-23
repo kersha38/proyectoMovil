@@ -1,0 +1,23 @@
+[
+    {
+        "nickname": "Pao",
+        "password": "12345",
+        "mail": "pao@gmail.com",
+        "ipRasp": "192.168.5.30",
+        "necesitaPassword": "si"
+    },
+    {
+        "nickname": "Carlos",
+        "password": "",
+        "mail": "kersha@gmail.com",
+        "ipRasp": "192.168.5.30",
+        "necesitaPassword": "no"
+    },
+    {
+        "nickname": "Luna",
+        "password": "lunera",
+        "mail": "kersha@gmail.com",
+        "ipRasp": "192.168.5.30",
+        "necesitaPassword": "si"
+    }
+]
