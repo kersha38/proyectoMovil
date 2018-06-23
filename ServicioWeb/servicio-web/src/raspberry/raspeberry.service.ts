@@ -7,14 +7,15 @@ export class RaspeberryService {
 
     añadirOrden(raspberry,tipo){
 
-        var actualizo=false;
+        let actualizo=false;
         const orden= new Orden(raspberry,tipo);
         this.ordenes.map((value)=>{
            if(value.raspberry==raspberry){
 
                value.tipo=tipo;
-               return value;
                actualizo=true;
+               return value;
+
            }
         });
 
@@ -26,10 +27,10 @@ export class RaspeberryService {
     }
 
     obtenerOrden(raspberry){
-        var orden:any;
+        let orden:any;
         this.ordenes.forEach((value)=>{
             if (value.raspberry==raspberry){
-                orden==value;
+                orden=value;
             }
         });
 
@@ -38,25 +39,27 @@ export class RaspeberryService {
 
 
     consultarSenso(raspberry){
-        var senso:any;
+        let senso:any;
         this.sensados.forEach((value)=>{
             if (value.raspberry==raspberry){
-                senso==value;
+                senso=value;
             }
         });
 
         return senso;
+        //return this.sensados;
     }
 
     actualizarSenso(raspberry,estado){
-        var actualizo=false;
+        let actualizo=false;
         const senso= new Senso(raspberry,estado);
-        this.sensados.map((value)=>{
+        this.sensados.forEach((value)=>{
             if(value.raspberry==raspberry){
 
                 value.estado=estado;
-                return value;
                 actualizo=true;
+                return value;
+
             }
         });
 

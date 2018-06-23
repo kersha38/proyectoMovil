@@ -1,4 +1,4 @@
-import {Body, Controller, Post, Res} from "@nestjs/common";
+import {Body, Controller, Post, Req, Res} from "@nestjs/common";
 import {RaspeberryService} from "./raspeberry.service";
 
 @Controller('Raspberry')
@@ -18,8 +18,9 @@ export class RaspberryController {
     }
 
     @Post('obtenerRaspberry')
-    obtenerRaspberry(@Res() response){
-        const raspberry=response.ip;
-        response.redirect("http(s)://api.qrserver.com/v1/create-qr-code/?data=raspberry&size=100x100");
+    obtenerRaspberry(@Req() request,@Res() response){
+        const raspberry=request.ip;
+        console.log("idRaspberry: "+raspberry)
+        response.redirect('http://api.qrserver.com/v1/create-qr-code/?data='+raspberry+'&size=100x100');
     }
 }
