@@ -1,4 +1,4 @@
-import {Body, Controller, Get, Post} from "@nestjs/common";
+import {Body, Controller, Get, Post, Query} from "@nestjs/common";
 import {UsuarioService} from "./usuario.service";
 import {RaspeberryService} from "../raspberry/raspeberry.service";
 
@@ -9,8 +9,8 @@ export class UsuarioController {
         _usuarioService.listarUsuarios();
     }
 
-    @Post('autentificarComun')
-    autentificarComun(@Body('nickname') nickname,@Body('password') password){
+    @Get('autentificarComun')
+    autentificarComun(@Query('nickname') nickname,@Query('password') password){
         return this._usuarioService.autentificarComun(nickname,password);
     }
 
@@ -19,18 +19,18 @@ export class UsuarioController {
         return this._usuarioService.autentificarGmailFb(mail);
     }
 
-    @Post('existeGmailFb')
-    existeGmailFb(@Body('mail') mail){
+    @Get('existeGmailFb')
+    existeGmailFb(@Query('mail') mail){
         return this._usuarioService.existeGmailFb(mail);
     }
 
     @Post('crearComun')
-    crearComun(
-        @Body('nickname') nickname,
-        @Body('mail') mail,
-        @Body('password') password
+    crearComun(@Body() usuario
+        // @Body('nickname') nickname,
+        // @Body('mail') mail,
+        // @Body('password') password
     ) {
-        return this._usuarioService.crearUsuarioComun(nickname, mail, password);
+        return this._usuarioService.crearUsuarioComun(usuario.nickname, usuario.mail, usuario.password);
     }
 
     @Post('crearConGmailFb')

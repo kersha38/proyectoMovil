@@ -47,11 +47,11 @@ export class UsuarioService {
                         console.error(err);
                         return;
                     }
-                    console.log("JsonUsuarios creado");
+                    console.log("JsonUsuario creado");
                 });
-            return this.users;
+            return {"mensaje":"usuarioCreado"};
         }else{
-            return "nickname ya fue ocupado"
+            return {"mensaje":"nickname ya fue ocupado"}
         }
     }
 
@@ -62,8 +62,8 @@ export class UsuarioService {
                 existeCuenta=true;
             }
         });
-
-        return existeCuenta;
+        console.log(existeCuenta);
+        return {"mensaje":String(existeCuenta)};
     }
 
     crearConGmailFb(nickname, mail) {

@@ -26,5 +26,19 @@
         "password": "123",
         "necesitaPassword": "si",
         "ipRasp": ""
+    },
+    {
+        "nickname": "Cami",
+        "mail": "cami@cami.com",
+        "password": "123456",
+        "necesitaPassword": "si",
+        "ipRasp": ""
+    },
+    {
+        "nickname": "cami",
+        "mail": "cami",
+        "password": "vami",
+        "necesitaPassword": "si",
+        "ipRasp": ""
     }
 ]
