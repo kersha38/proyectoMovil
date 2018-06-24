@@ -51,7 +51,7 @@ export class UsuarioService {
                 });
             return {"mensaje":"usuarioCreado"};
         }else{
-            return {"mensaje":"nickname ya fue ocupado"}
+            return {"mensaje":"Email ya fue ocupado"}
         }
     }
 
@@ -78,7 +78,7 @@ export class UsuarioService {
                 }
                 console.log("JsonUsuarios creado");
             });
-        return this.users;
+        return {"mensaje":"usuarioCreado"};
     }
 
     autentificarComun(nickname,password){

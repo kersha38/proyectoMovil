@@ -14,8 +14,8 @@ export class UsuarioController {
         return this._usuarioService.autentificarComun(nickname,password);
     }
 
-    @Post('autentificarGmailFb')
-    autentificarGmailFb(@Body('mail') mail){
+    @Get('autentificarGmailFb')
+    autentificarGmailFb(@Query('mail') mail){
         return this._usuarioService.autentificarGmailFb(mail);
     }
 
@@ -34,11 +34,11 @@ export class UsuarioController {
     }
 
     @Post('crearConGmailFb')
-    crearConGmailFb(
-        @Body('nickname') nickname,
-        @Body('mail') mail,
+    crearConGmailFb(@Body() usuario
+        // @Body('nickname') nickname,
+        // @Body('mail') mail,
     ) {
-        return this._usuarioService.crearConGmailFb(nickname, mail);
+        return this._usuarioService.crearConGmailFb(usuario.nickname, usuario.mail);
     }
 
     @Get('listar')
