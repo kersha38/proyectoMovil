@@ -138,7 +138,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         }else{
             configurationActual.setUrl(result.getText());
             leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
-            Toast.makeText(getApplicationContext(),"Url registrada",Toast.LENGTH_SHORT);
+            Toast.makeText(getApplicationContext(),"Raspberry registrada",Toast.LENGTH_SHORT);
             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
             startActivity(intent);
             finish();
@@ -150,7 +150,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         // this = getaplicationcontext
         AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(this);
         dialogoAlerta.setTitle("Mensaje");
-        dialogoAlerta.setMessage("El dispositivo ya fue refistrado anteriormente");
+        dialogoAlerta.setMessage("El dispositivo ya fue registrado anteriormente");
 
         // interface para el boton Positive
         dialogoAlerta.setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
