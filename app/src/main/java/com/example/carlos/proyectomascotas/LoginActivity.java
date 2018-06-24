@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.example.carlos.proyectomascotas.control.JSONResponse;
 import com.example.carlos.proyectomascotas.control.RequestInterface;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
+import com.example.carlos.proyectomascotas.modelo.Mensaje;
 import com.example.carlos.proyectomascotas.modelo.Usuario;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     Button botonIngresar;
     //service
     ServiceWeb serviceWeb = new ServiceWeb() ;
+    Boolean loginGmailFb = false;
     //varaibles fb
     private CallbackManager callbackManager;
     private LoginButton loginButton;
@@ -67,33 +69,59 @@ public class LoginActivity extends AppCompatActivity {
         botonIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Authentificacion de Usuario comun
+                if(!loginGmailFb){
+                    serviceWeb
+                            .getJSONObjeto()
+                            .getUsuarioAuth("Pao","12345")
+                            .enqueue(new Callback<Usuario>() {
+                                         @Override
+                                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                             Usuario jsonResponse = response.body();
+                                             Log.e("Contenido: ",jsonResponse.getNickname()+"");
+                                             if(jsonResponse != null){
+                                                 Intent intent = new Intent(getApplicationContext(), RegistrarMacActivity.class);
+                                                 startActivity(intent);
+                                             }else{
+                                                 Toast.makeText(getApplicationContext(), "Auth invalida", Toast.LENGTH_SHORT).show();
+                                             }
 
-                serviceWeb
-                        .getJSONObjeto()
-                        .getUsuarioAuth("Pao","12345")
-                        .enqueue(new Callback<Usuario>() {
-                            @Override
-                            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                                Usuario jsonResponse = response.body();
-                                //Conversion de la respuesta
-//                                String jsonResponse = response.body().toString();
-//                                String myCliente_JSONResponse="{\"users\":"+jsonResponse+"}";
-//                                Log.e("jsonCliente", myCliente_JSONResponse+"");
-//                                JSONResponse jsonFinal = new Gson().fromJson(myCliente_JSONResponse, JSONResponse.class);
-//                                Log.e("jsonfinal::", jsonFinal+"");
-//                                ArrayList a = new ArrayList<> (Arrays.asList(jsonFinal.getUsuarios()));
-//                                Log.e("Contenido: ", ((Usuario) a.get(0)).getNickname()+"");
-                                Log.e("Contenido: ",jsonResponse.getNickname()+"");
-                                Intent intent = new Intent(getApplicationContext(), RegistrarMacActivity.class);
-                                startActivity(intent);
-                            }
+                                         }
 
-                            @Override
-                            public void onFailure(Call<Usuario> call, Throwable t) {
-                                Log.e("Erro..!!", t.getMessage());
-                            }
-                        }
-                        );
+                                         @Override
+                                         public void onFailure(Call<Usuario> call, Throwable t) {
+                                             Log.e("Erro..!!", t.getMessage());
+                                         }
+                                     }
+                            );
+                }else{
+                    //authenticacion usuario GAMIL / FB
+                    serviceWeb
+                            .getJSONObjeto()
+                            .getUsuarioGmailFbAuth("pao@gmail.com")
+                            .enqueue(new Callback<Usuario>() {
+                                         @Override
+                                         public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                             Usuario jsonResponse = response.body();
+                                             Log.e("Contenido: ",jsonResponse.getNickname()+"");
+                                             if(jsonResponse != null){
+                                                 Toast.makeText(getApplicationContext(), "Ingreso exitoso", Toast.LENGTH_SHORT).show();
+                                                 Intent intent = new Intent(getApplicationContext(), RegistrarMacActivity.class);
+                                                 startActivity(intent);
+                                             }else{
+                                                 Toast.makeText(getApplicationContext(), "Auth invalida", Toast.LENGTH_SHORT).show();
+                                             }
+
+                                         }
+
+                                         @Override
+                                         public void onFailure(Call<Usuario> call, Throwable t) {
+                                             Log.e("Erro..!!", t.getMessage());
+                                         }
+                                     }
+                            );
+                }
+
 
             }
         });
@@ -135,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
+
                         //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
 
                         Log.e("facebbok result",loginResult.getAccessToken().getPermissions().toString());
@@ -190,11 +219,10 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("email",acc.getEmail());
                 Log.e("email",acc.getDisplayName());
                 Log.e("email",acc.getId());
-                //consulto al servicio
-                //serviceLoginGmailFB(acc.getEmail().toString(), acc.getDisplayName());
 
-                Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
-                startActivity(intentPrincipal);
+                //consulto al servicio
+                serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+
             }
         }else if(requestCode==CODEfacebook){
 
@@ -215,30 +243,48 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-//    public void serviceLoginGmailFB(String email, String displayName){
-//        ServiceWeb serviceWeb1 = new ServiceWeb("objeto");
-//        serviceWeb1
-//                .getJSONObjeto()
-//                .verificarExisteCuenta(email)
-//                .enqueue(new Callback<JSONResponse>() {
-//                    @Override
-//                    public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
-//                        JSONResponse jsonResponse= response.body();
-//                        Log.e("Contenido: ",jsonResponse+"");
-//                        if(jsonResponse.getExisteCuenta()){
-//                            Toast.makeText(getApplicationContext(), "ya existe esta cuenta", Toast.LENGTH_SHORT).show();
-//                        }else{
-//
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<JSONResponse> call, Throwable t) {
-//                        Log.e("Erro..!!", t.getMessage());
-//                    }
-//                });
-//    }
+    public void serviceLoginGmailFB(final String email, final String displayName){
+        //verificar si existe correo gmail o facebook
+        serviceWeb
+                .getJSONObjeto()
+                .verificarExisteCuenta(email)
+                .enqueue(new Callback<Mensaje>() {
+                    @Override
+                    public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                        Mensaje jsonResponse= response.body();
+                        Log.e("Contenido: ",jsonResponse+"");
+                        if(jsonResponse.getMensaje().equals("true")){
+                            Toast.makeText(getApplicationContext(), "Ya existe esta cuenta", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Usuario usuario = new Usuario(displayName, "", email, "", "");
+                            serviceWeb
+                                    .getJSONObjeto()
+                                    .crearUsuarioGmailFb(usuario)
+                                    .enqueue(new Callback<Mensaje>() {
+                                        @Override
+                                        public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                                            Mensaje jsonResponse= response.body();
+                                            if(jsonResponse.getMensaje().equals("usuarioCreado")){
+                                                loginGmailFb = true;
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<Mensaje> call, Throwable t) {
+                                            Log.e("Erro..!!", t.getMessage());
+                                        }
+                                    });
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Mensaje> call, Throwable t) {
+                        Log.e("Erro..!!", t.getMessage());
+                    }
+                });
+    }
 
 //    @Override
 //    protected void onStart() {
