@@ -1,6 +1,7 @@
 package com.example.carlos.proyectomascotas;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +33,8 @@ public class RegistryActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+            //validaciones
+            if(!camposVacios()) {
                 if(txtPassword.getText().toString().equals(txtConfirm.getText().toString())){
 //                    LeerEscribirArchivos archivo=new LeerEscribirArchivos();
 //                    archivo.escribirArchivo(
@@ -41,15 +43,40 @@ public class RegistryActivity extends AppCompatActivity {
 //                                    txtPassword.getText().toString(),
 //                                    txtMail.getText().toString()),
 //                            "registrados.bin");
-                    Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_SHORT).show();
 //                    Intent intentLogin=new Intent(getApplicationContext(),RegistrarMacActivity.class);
 //                    startActivity(intentLogin);
                     finish();
                 }else{
-                    Toast.makeText(getApplicationContext(),"Erro Registrando",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Password no iguales",Toast.LENGTH_SHORT).show();
                 }
+            }else{
+
+            }
+
 
             }
         });
+    }
+
+    public Boolean camposVacios(){
+        Boolean errores=false;
+        if(txtName.getText().length() == 0){
+            txtName.setError("Nombre es obligatorio");
+            errores = true;
+        }
+        if(txtMail.getText().length() == 0){
+            txtMail.setError("Email es obligatorio");
+            errores = true;
+        }
+        if(txtPassword.getText().length() == 0){
+            txtPassword.setError("Password es obligatorio");
+            errores = true;
+        }
+        if(txtConfirm.getText().length() == 0){
+            txtConfirm.setError("Confirme el password");
+            errores = true;
+        }
+        return errores;
     }
 }
