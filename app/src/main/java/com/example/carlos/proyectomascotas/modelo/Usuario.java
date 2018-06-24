@@ -1,11 +1,23 @@
-package com.example.carlos.proyectomascotas.control;
+package com.example.carlos.proyectomascotas.modelo;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 public class Usuario {
-
+    @SerializedName("nickname")
+    @Expose
     private String nickname;
+    @SerializedName("password")
+    @Expose
     private String password;
+    @SerializedName("mail")
+    @Expose
     private String mail;
+    @SerializedName("ipRasp")
+    @Expose
     private String ipRasp;
+    @SerializedName("necesitaPassword")
+    @Expose
     private String necesitaPassword;
 
     public Usuario(String nickname, String password, String mail, String ipRasp, String necesitaPassword) {
