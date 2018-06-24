@@ -27,4 +27,13 @@ public interface RequestInterface {
     @GET("Usuario/existeGmailFb")
     Call<Mensaje> verificarExisteCuenta(@Query("mail") String mail);
 
+    @POST("Usuario/crearConGmailFb")
+    Call<Mensaje> crearUsuarioGmailFb(
+            @Body Usuario usuario
+    );
+
+    @GET("/Usuario/autentificarGmailFb")
+    Call<Usuario> getUsuarioGmailFbAuth(
+            @Query("mail") String mail);
+
 }

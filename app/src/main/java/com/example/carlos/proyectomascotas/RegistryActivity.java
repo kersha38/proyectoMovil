@@ -54,6 +54,7 @@ public class RegistryActivity extends AppCompatActivity {
                             txtName.getText().toString(),
                             txtPassword.getText().toString(),
                             txtMail.getText().toString(), "", "");
+                    //creau usuario comun
                     serviceWeb
                             .getJSONObjeto()
                             .crearUsuarioNuevo(usuario)
@@ -62,7 +63,12 @@ public class RegistryActivity extends AppCompatActivity {
                                 public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                                     Mensaje jsonResponse = response.body();
                                     Log.e("Resp ServiceWeb::", jsonResponse.getMensaje()+"");
-                                    Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_SHORT).show();
+                                    if(jsonResponse.getMensaje().equals("usuarioCreado")){
+                                        Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_SHORT).show();
+                                        finish();
+                                    }else{
+                                        Toast.makeText(getApplicationContext(),"Email ya esta ocupado",Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 @Override
@@ -71,7 +77,7 @@ public class RegistryActivity extends AppCompatActivity {
                                 }
                             });
 
-                    finish();
+
                 }else{
                     Toast.makeText(getApplicationContext(),"Password no iguales",Toast.LENGTH_SHORT).show();
                 }
