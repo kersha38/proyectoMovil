@@ -3,7 +3,7 @@ import requests
 #import time
 
 hilos = []
-
+direccionBase = 'https://tranquil-mountain-87492.herokuapp.com/'#"http://localhost:3000/"
 
 def empezarHilos(arrHilos):
     for hilo in arrHilos:
@@ -24,7 +24,7 @@ def realizarOrden(orden):
 
 def consultarOrden(raspberry):
     while True:
-        ordenActual = requests.get('http://127.0.0.1:3000/Raspberry/obtenerOrden?raspberry=' + raspberry)
+        ordenActual = requests.get(direccionBase+'Raspberry/obtenerOrden?raspberry=' + raspberry)
 
         try:
             realizarOrden(ordenActual.json())
@@ -36,7 +36,7 @@ def consultarOrden(raspberry):
 def actualizarSenso(raspberry):
     while True:
         senso = "sensado"
-        requests.get('http://127.0.0.1:3000/Raspberry/actualizarSenso?raspberry=' + raspberry + '&&estado=' + senso)
+        requests.get(direccionBase+'Raspberry/actualizarSenso?raspberry=' + raspberry + '&&estado=' + senso)
         print senso
 
 
