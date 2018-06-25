@@ -28,13 +28,19 @@ export class RaspeberryService {
 
     obtenerOrden(raspberry){
         let orden:any;
-        this.ordenes.forEach((value)=>{
+        let indice=0;
+        this.ordenes.forEach((value,i)=>{
             if (value.raspberry==raspberry){
                 orden=value;
+                indice=i;
             }
         });
+        if(orden){
+            this.ordenes.pop()
+            return orden;
+        }
 
-        return orden;
+        return {};
     }
 
 

@@ -1,4 +1,4 @@
-import {Body, Controller, Post, Req, Res} from "@nestjs/common";
+import {Body, Controller, Get, Post, Query, Req, Res} from "@nestjs/common";
 import {RaspeberryService} from "./raspeberry.service";
 
 @Controller('Raspberry')
@@ -7,17 +7,17 @@ export class RaspberryController {
 
     }
 
-    @Post('actualizarSenso')
-    actualizarSenso(@Body('raspberry') raspberry,@Body('estado') estado){
+    @Get('actualizarSenso')
+    actualizarSenso(@Query('raspberry') raspberry,@Query('estado') estado){
         return this._raspberryService.actualizarSenso(raspberry,estado);
     }
 
-    @Post('obtenerOrden')
-    obtenerOrden(@Body('raspberry') raspberry){
+    @Get('obtenerOrden')
+    obtenerOrden(@Query('raspberry') raspberry){
         return this._raspberryService.obtenerOrden(raspberry);
     }
 
-    @Post('obtenerRaspberry')
+    @Get('obtenerRaspberry')
     obtenerRaspberry(@Req() request,@Res() response){
         const raspberry=request.ip;
         console.log("idRaspberry: "+raspberry)
