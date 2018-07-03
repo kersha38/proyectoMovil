@@ -1,47 +1,45 @@
 import threading
 import requests
-#import time
 
 hilos = []
-direccionBase = 'https://tranquil-mountain-87492.herokuapp.com/'#"http://localhost:3000/"
+direccion_base = 'https://tranquil-mountain-87492.herokuapp.com/'
 
-def empezarHilos(arrHilos):
-    for hilo in arrHilos:
+def empezar_hilos(arr_hilos):
+    for hilo in arr_hilos:
         hilo.start()
 
 
-def realizarOrden(orden):
-    print "hago algo" + str(orden)
+def realizar_orden(orden):
+    print ("hago algo" + str(orden))
     if orden == "agua":
-        print "abrir agua"
+        print ("abrir agua")
     elif orden == "comida":
-        print "abrir comida"
+        print ("abrir comida")
     elif orden == "luzON":
-        print "prender luz"
+        print ("prender luz")
     elif orden == "luzOFF":
-        print "apagar luz"
+        print ("apagar luz")
 
 
-def consultarOrden(raspberry):
+def consultar_orden(raspberry):
     while True:
-        ordenActual = requests.get(direccionBase+'Raspberry/obtenerOrden?raspberry=' + raspberry)
+        orden_actual = requests.get(direccion_base+'Raspberry/obtenerOrden?raspberry=' + raspberry)
 
         try:
-            realizarOrden(ordenActual.json())
-        # time.sleep(1)
+            realizar_orden(orden_actual.json())
         except:
-            print "sin orden"
+            print ("sin orden")
 
 
-def actualizarSenso(raspberry):
+def actualizar_senso(raspberry):
     while True:
         senso = "sensado"
-        requests.get(direccionBase+'Raspberry/actualizarSenso?raspberry=' + raspberry + '&&estado=' + senso)
-        print senso
+        requests.get(direccion_base+'Raspberry/actualizarSenso?raspberry=' + raspberry + '&&estado=' + senso)
+        print (senso)
 
 
-hiloConsultaOrden = threading.Thread(target=consultarOrden, args=(str(1),))
-hilos.append(hiloConsultaOrden)
-hiloSensar = threading.Thread(target=actualizarSenso, args=(str(1),))
+hilo_consulta_orden = threading.Thread(target=consultar_orden, args=(str(1),))
+hilos.append(hilo_consulta_orden)
+hiloSensar = threading.Thread(target=actualizar_senso, args=(str(1),))
 hilos.append(hiloSensar)
-empezarHilos(hilos)
+empezar_hilos(hilos)

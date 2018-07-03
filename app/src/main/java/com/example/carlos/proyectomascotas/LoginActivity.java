@@ -13,9 +13,12 @@ import com.example.carlos.proyectomascotas.control.RequestInterface;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
 import com.example.carlos.proyectomascotas.modelo.Usuario;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -28,7 +31,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import retrofit2.Call;
@@ -126,6 +128,10 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        loginButton = (LoginButton) findViewById(R.id.login_button);
+        loginButton.setReadPermissions("public_profile");
+        // If using in a fragment
+        //loginButton.setFragment(this);
         //facebook
         callbackManager = CallbackManager.Factory.create();
         /***************************FACEBOOK*******************/
@@ -134,41 +140,54 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
 
 
-        loginButton = (LoginButton) findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-        // If using in a fragment
-        //loginButton.setFragment(this);
 
-        // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-                // Profile profile=Profile.getCurrentProfile();
-            }
 
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
+                    ProfileTracker mProfileTracker;
+                    Profile perfil;
+
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-                        // App code
 
-                        //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+                        if(Profile.getCurrentProfile() == null) {
+                            mProfileTracker = new ProfileTracker() {
+                                @Override
+                                protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                                    perfil=currentProfile;
 
-                        Log.e("facebbok result",loginResult.getAccessToken().getPermissions().toString());
-                        Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
-                        startActivity(intentPrincipal);
+                                    Log.e("fb Nombre",perfil.getName());
+                                    Log.e("fb id",perfil.getId());
+                                    Log.e("fb first",perfil.getFirstName());
+                                    Log.e("fb last",perfil.getLastName());
+                                    Log.e("fb uri",perfil.getProfilePictureUri(100,200).toString());
+
+                                    //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+
+
+                                    Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
+                                    startActivity(intentPrincipal);
+                                    mProfileTracker.stopTracking();
+                                }
+                            };
+                            // no need to call startTracking() on mProfileTracker
+                            // because it is called by its constructor, internally.
+                        }
+                        else {
+                            perfil = Profile.getCurrentProfile();
+                            Log.e("fb Nombre",perfil.getName());
+                            Log.e("fb id",perfil.getId());
+                            Log.e("fb first",perfil.getFirstName());
+                            Log.e("fb last",perfil.getLastName());
+                            Log.e("fb uri",perfil.getProfilePictureUri(100,200).toString());
+
+                            //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+
+
+                            Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
+                            startActivity(intentPrincipal);
+                        }
                     }
 
                     @Override
@@ -199,7 +218,6 @@ public class LoginActivity extends AppCompatActivity {
 
         // programo actividad para q retorno el resultado del logueo
         startActivityForResult(signIntend, CODEgoogle);
-
     }
 
     //capturo resultado del logueo gmail
@@ -221,20 +239,15 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("email",acc.getId());
 
                 //consulto al servicio
-                serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+                //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
 
             }
         }else if(requestCode==CODEfacebook){
-
             // metodo de  result en fb
-            callbackManager.onActivityResult(requestCode, resultCode, data);
+            if(callbackManager.onActivityResult(requestCode, resultCode, data)){
+                return;
+            }
 
-//            //recupero sesion
-//            AccessToken accessToken = AccessToken.getCurrentAccessToken();
-//            boolean isLoggedIn = accessToken != null && !accessToken.isExpired();
-//
-//            //reinicio sesion
-//            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile"));
         }
     }
 
@@ -274,7 +287,6 @@ public class LoginActivity extends AppCompatActivity {
                                             Log.e("Erro..!!", t.getMessage());
                                         }
                                     });
-
                         }
 
                     }

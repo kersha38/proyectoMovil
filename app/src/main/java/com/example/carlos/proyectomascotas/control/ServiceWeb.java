@@ -10,7 +10,7 @@ public class ServiceWeb {
 
     public ServiceWeb(){
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.6:3000")
+                .baseUrl("http://172.29.65.13:3000")//.baseUrl("http://tranquil-mountain-87492.herokuapp.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
