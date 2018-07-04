@@ -75,7 +75,6 @@ export class RaspeberryService {
 
         return senso;
     }
-
 }
 export class Orden {
     constructor(public raspberry,public tipo){}
