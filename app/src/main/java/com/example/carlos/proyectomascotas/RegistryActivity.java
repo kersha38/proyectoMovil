@@ -90,8 +90,8 @@ public class RegistryActivity extends AppCompatActivity {
         });
     }
 
-    public Boolean camposVacios(){
-        Boolean errores=false;
+    public boolean camposVacios(){
+        boolean errores=false;
         if(txtName.getText().length() == 0){
             txtName.setError("Nombre es obligatorio");
             errores = true;
