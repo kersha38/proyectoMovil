@@ -20,6 +20,10 @@ public interface RequestInterface {
             @Query("nickname") String nickname,
             @Query("password") String password);
 
+    @GET("/Usuario/autentificarGmailFb")
+    Call<Usuario> getUsuarioGmailFbAuth(
+            @Query("mail") String mail);
+
     @POST("Usuario/crearComun")
     Call<Mensaje> crearUsuarioNuevo(
             @Body Usuario usuario);
@@ -32,8 +36,5 @@ public interface RequestInterface {
             @Body Usuario usuario
     );
 
-    @GET("/Usuario/autentificarGmailFb")
-    Call<Usuario> getUsuarioGmailFbAuth(
-            @Query("mail") String mail);
 
 }
