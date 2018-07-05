@@ -87,10 +87,10 @@ export class UsuarioService {
         this.users.forEach((usuario)=>{
             //console.log(usuario.nickname)
             if (usuario.nickname == nickname && usuario.password==password && usuario.necesitaPassword=="si"){
-
                 usuarioBuscado=usuario;
             }
         });
+        console.log(usuarioBuscado);
         return usuarioBuscado;
     }
 
@@ -99,8 +99,8 @@ export class UsuarioService {
         this.users.forEach((usuario)=>{
             //console.log(usuario.nickname)
             if (usuario.mail == mail && usuario.necesitaPassword=="no"){
-
                 usuarioBuscado=usuario;
+                console.log(usuarioBuscado);
             }
         });
         return usuarioBuscado;
