@@ -24,7 +24,7 @@
             android:orientation="horizontal"
             android:layout_alignBottom="@id/videoView">
 
-            <ImageView
+            <com.google.android.youtube.player.YouTubePlayerView
                 android:id="@+id/imageView"
                 android:layout_width="56dp"
                 android:layout_height="55dp"
