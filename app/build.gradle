@@ -38,3 +38,5 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
 }
+
+apply plugin: "com.google.gms.google-services"

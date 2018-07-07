@@ -10,6 +10,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.example.carlos.proyectomascotas.modelo.YoutubeConfi;
 import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
@@ -21,8 +22,7 @@ public class CamaraActivity extends YouTubeBaseActivity{
     ImageView imagenMicro;
 
     // para youtube player
-    YouTubePlayer.OnInitializedListener onInitializedListener;
-    String claveYoutube="AIzaSyCMHEwtHCjNMCrqWunXe8_Exm0BFxCzib0";
+    YouTubePlayer.OnInitializedListener mOnInitializedListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -33,12 +33,12 @@ public class CamaraActivity extends YouTubeBaseActivity{
         viewYoutube=(YouTubePlayerView)findViewById(R.id.viewYoutube);
         imagenMicro=(ImageView)findViewById(R.id.imageView);
 
-        onInitializedListener = new YouTubePlayer.OnInitializedListener() {
+        mOnInitializedListener = new YouTubePlayer.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-                if(b){
+                if(!b){
                     Log.e("logro","LO LOGRO");
-                    youTubePlayer.cueVideo("Nc7sTqdRpHc");
+                    youTubePlayer.loadVideo("z5svoighsdk");
                 }
 
             }
@@ -48,9 +48,6 @@ public class CamaraActivity extends YouTubeBaseActivity{
                 Log.e("fallo:","ESTAMOS EN EL FALLO");
             }
         };
-
-        viewYoutube.initialize(claveYoutube,onInitializedListener);
-
 
         switchMicrofono.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +61,10 @@ public class CamaraActivity extends YouTubeBaseActivity{
                 }
             }
         });
+
+        //nicializo el video
+        Log.e("inicializo","estoy inicializando");
+        viewYoutube.initialize(YoutubeConfi.getApiKey(),mOnInitializedListener);
     }
 
 }
