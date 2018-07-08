@@ -36,7 +36,8 @@ export class RaspeberryService {
             }
         });
         if(orden){
-            this.ordenes.pop()
+            //this.ordenes.pop()
+            this.ordenes.splice(indice,1);
             return orden;
         }
 

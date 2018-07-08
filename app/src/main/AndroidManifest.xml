@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -48,8 +48,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ComidaActivity"
             android:label="Alimentación" />
@@ -70,13 +68,14 @@
             android:label="Sync Raspberry" />
         <activity
             android:name=".MenuActivity"
-            android:label="Monitorizacion"/>
+            android:label="Monitorizacion" />
         <activity
             android:name=".RegistryActivity"
-            android:label="Registro"/>
+            android:label="Registro" />
         <activity
             android:name=".RegistrarMacActivity"
-            android:label="Registro Mac"></activity>
+            android:label="Registro Mac" />
+        <activity android:name=".VideoActivity"></activity>
     </application>
 
 </manifest>
