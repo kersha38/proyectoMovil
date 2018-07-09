@@ -108,11 +108,13 @@ export class UsuarioService {
 
     registrarRaspberry(raspberry,mail){
         var usuarioBuscado:any;
+        console.log("raspA",raspberry);
         this.users.forEach((usuario,numeroUsuario)=>{
-            //console.log(usuario.nickname)
+            console.log("raspB",usuario.raspberry);
             if (usuario.mail == mail){
 
                 usuarioBuscado=usuario;
+                console.log(usuarioBuscado);
                 usuarioBuscado.ipRasp=raspberry;
                 this.users[numeroUsuario]=usuarioBuscado;
             }

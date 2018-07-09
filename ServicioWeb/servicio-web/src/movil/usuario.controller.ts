@@ -52,7 +52,7 @@ export class UsuarioController {
     }
 
     @Post('registrarRaspberry')
-    registrarRaspberry(@Body('raspberry') raspberry,@Body('nickname') nickname){
-        return this._usuarioService.registrarRaspberry(raspberry,nickname);
+    registrarRaspberry(@Body() usuario){
+        return this._usuarioService.registrarRaspberry(usuario.raspberry,usuario.mail);
     }
 }
