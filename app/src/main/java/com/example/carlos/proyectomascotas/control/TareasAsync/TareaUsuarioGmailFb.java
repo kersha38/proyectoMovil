@@ -1,0 +1,196 @@
+package com.example.carlos.proyectomascotas.control.TareasAsync;
+
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.example.carlos.proyectomascotas.LoginActivity;
+import com.example.carlos.proyectomascotas.control.Dialogo;
+import com.example.carlos.proyectomascotas.control.ServiceWeb;
+import com.example.carlos.proyectomascotas.modelo.Mensaje;
+import com.example.carlos.proyectomascotas.modelo.Usuario;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
+    private ProgressDialog progressDialog;
+    private Context contextoActivity;
+    ServiceWeb serviceWeb = new ServiceWeb();
+
+
+    public TareaUsuarioGmailFb(Context context){
+        contextoActivity = context;
+    }
+
+    @Override
+    protected Usuario doInBackground(String... strings) {
+        String name = strings[0];
+        String idCuenta = strings[1];
+        Usuario usuario = null;
+        if(verificarExisteCuenta(name, idCuenta)){
+            try {
+                usuario = autentificarUsuarioGmailFb(idCuenta);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }else{
+            try {
+                if(crearCuentaGmailFb(name,idCuenta)){
+                    usuario = autentificarUsuarioGmailFb(idCuenta);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        return usuario;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        if(verificarConexion(contextoActivity)){
+            progressDialog = new ProgressDialog(contextoActivity);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setMessage("Conectando al service web...");
+            progressDialog.setCancelable(true);
+            progressDialog.show();
+            //progressDialog.setMax(100);
+            progressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                @Override
+                public void onCancel(DialogInterface dialogInterface) {
+                    TareaUsuarioGmailFb.this.cancel(true);
+                }
+            });
+        }else{
+            Dialogo dialogo = new Dialogo(contextoActivity);
+            dialogo.alertarConexionInternet();
+            TareaUsuarioGmailFb.this.cancel(true);
+        }
+
+        //progressDialog.setProgress(0);
+
+
+    }
+
+    @Override
+    protected void onPostExecute(Usuario usuario) {
+        progressDialog.dismiss();
+        if(usuario != null){
+            Log.e("PostExe:",usuario.getNickname()+"");
+            cambiarDeActivity();
+        }
+    }
+
+    @Override
+    protected void onCancelled() {
+        Toast.makeText(contextoActivity, "Conexión cancelada", Toast.LENGTH_SHORT).show();
+        super.onCancelled();
+    }
+
+    public boolean verificarConexion(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
+    }
+
+    public Boolean verificarExisteCuenta(final String name, final String email){
+        final boolean[] existe = {false};
+        try {
+            serviceWeb
+                    .getJSONObjeto()
+                    .verificarExisteCuenta(email)
+                    .enqueue(new Callback<Mensaje>() {
+                        @Override
+                        public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                            Mensaje jsonResponse= response.body();
+                            Log.e("Contenido: ",jsonResponse.getMensaje());
+                            if(jsonResponse.getMensaje().equals("true")){ //service responde TRUE || false
+                                //si existe cuenta google fb, directo autentica
+                                //autentificarUsuarioGmailFb(email);
+                                existe[0] = true;
+                            }else{
+                                //no existe, primero registra y luego autentica
+                                //crearCuentaGmailFb(name, email);
+                                existe[0] = false;
+                            }
+
+                        }
+
+                        @Override
+                        public void onFailure(Call<Mensaje> call, Throwable t) {
+                            Log.e("Erro..!!", t.getMessage());
+                        }
+                    });
+            Thread.sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return existe[0];
+    }
+
+    public Usuario autentificarUsuarioGmailFb(String email) throws InterruptedException {
+        final Usuario[] usuarioGmailFb = {null};
+        serviceWeb
+                .getJSONObjeto()
+                .getUsuarioGmailFbAuth(email)
+                .enqueue(new Callback<Usuario>() {
+                             @Override
+                             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                                 Usuario jsonResponse = response.body();
+                                 Log.e("Auth: ",jsonResponse.getNickname()+"");
+                                 if(jsonResponse != null){
+                                     usuarioGmailFb[0] = jsonResponse;
+
+                                 }
+                             }
+
+                             @Override
+                             public void onFailure(Call<Usuario> call, Throwable t) {
+                                 Log.e("Erro..!!", t.getMessage());
+                                 Toast.makeText(contextoActivity,"No autenticado",Toast.LENGTH_SHORT).show();
+                             }
+                         }
+                );
+        Thread.sleep(1500);
+        return usuarioGmailFb[0];
+    }
+
+    public Boolean crearCuentaGmailFb(String name, final String email) throws InterruptedException {
+        final boolean[] creoUsuario = {false};
+        Usuario usuarioNuevo = new Usuario(name, "", email, "", "");
+        serviceWeb
+                .getJSONObjeto()
+                .crearUsuarioGmailFb(usuarioNuevo)
+                .enqueue(new Callback<Mensaje>() {
+                    @Override
+                    public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                        Mensaje jsonResponse= response.body();
+                        if(jsonResponse.getMensaje().equals("usuarioCreado")){
+                            Toast.makeText(contextoActivity,"Usuario Gmail/Fb Creado",Toast.LENGTH_SHORT).show();
+                            //autentificarUsuarioGmailFb(email);
+                            creoUsuario[0] = true;
+                        }else{
+
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Mensaje> call, Throwable t) {
+                        Log.e("Erro..!!", t.getMessage());
+                    }
+                });
+        Thread.sleep(1500);
+        return creoUsuario[0];
+    }
+
+    public void cambiarDeActivity(){
+        LoginActivity activity = (LoginActivity) contextoActivity;
+        activity.empezarNuevaActivity("ACTIVITY_REG_MAC");
+    }
+}

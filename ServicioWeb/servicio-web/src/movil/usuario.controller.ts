@@ -1,7 +1,7 @@
-import {Body, Controller, Get, Post, Query} from "@nestjs/common";
+import {Body, Controller, Get, Post, Query, Res} from "@nestjs/common";
 import {UsuarioService} from "./usuario.service";
 import {RaspeberryService} from "../raspberry/raspeberry.service";
-
+const fs = require('fs');
 @Controller('Usuario')
 export class UsuarioController {
     constructor(private _usuarioService: UsuarioService,
@@ -26,17 +26,17 @@ export class UsuarioController {
 
     @Post('crearComun')
     crearComun(@Body() usuario
-        // @Body('nickname') nickname,
-        // @Body('mail') mail,
-        // @Body('password') password
+               // @Body('nickname') nickname,
+               // @Body('mail') mail,
+               // @Body('password') password
     ) {
         return this._usuarioService.crearUsuarioComun(usuario.nickname, usuario.mail, usuario.password);
     }
 
     @Post('crearConGmailFb')
     crearConGmailFb(@Body() usuario
-        // @Body('nickname') nickname,
-        // @Body('mail') mail,
+                    // @Body('nickname') nickname,
+                    // @Body('mail') mail,
     ) {
         return this._usuarioService.crearConGmailFb(usuario.nickname, usuario.mail);
     }
@@ -54,5 +54,18 @@ export class UsuarioController {
     @Post('registrarRaspberry')
     registrarRaspberry(@Body() usuario){
         return this._usuarioService.registrarRaspberry(usuario.raspberry,usuario.mail);
+    }
+
+    @Get('obtenerVideo')
+    obtenerVideo(@Res() res){
+        const path = 'subidos/sample.mp4';
+        const stat = fs.statSync(path);
+        const fileSize = stat.size;
+        const head = {
+            'Content-Length': fileSize,
+            'Content-Type': 'video/mp4',
+        };
+        res.writeHead(200, head);
+        fs.createReadStream(path).pipe(res);
     }
 }

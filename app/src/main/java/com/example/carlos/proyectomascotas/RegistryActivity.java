@@ -1,7 +1,11 @@
 package com.example.carlos.proyectomascotas;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,13 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.carlos.proyectomascotas.control.JSONResponse;
+import com.example.carlos.proyectomascotas.control.Dialogo;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
+import com.example.carlos.proyectomascotas.control.TareasAsync.TareaRegistrarUsuario;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
 import com.example.carlos.proyectomascotas.modelo.Usuario;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,7 +32,7 @@ public class RegistryActivity extends AppCompatActivity {
     EditText txtPassword;
     EditText txtConfirm;
     Button btnRegistrar;
-    ServiceWeb serviceWeb = new ServiceWeb();
+    //ServiceWeb serviceWeb = new ServiceWeb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,34 +52,11 @@ public class RegistryActivity extends AppCompatActivity {
             //validaciones
             if(!camposVacios()) {
                 if(txtPassword.getText().toString().equals(txtConfirm.getText().toString())){
-                    Usuario usuario = new Usuario(
+                    TareaRegistrarUsuario tarea = new TareaRegistrarUsuario(RegistryActivity.this);
+                    tarea.execute(
                             txtName.getText().toString(),
                             txtPassword.getText().toString(),
-                            txtMail.getText().toString(), "", "");
-                    //creau usuario comun
-                    serviceWeb
-                            .getJSONObjeto()
-                            .crearUsuarioNuevo(usuario)
-                            .enqueue(new Callback<Mensaje>() {
-                                @Override
-                                public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
-                                    Mensaje jsonResponse = response.body();
-                                    Log.e("Resp ServiceWeb::", jsonResponse.getMensaje()+"");
-                                    if(jsonResponse.getMensaje().equals("usuarioCreado")){
-                                        Toast.makeText(getApplicationContext(),"Usuario creado",Toast.LENGTH_SHORT).show();
-                                        finish();
-                                    }else{
-                                        Toast.makeText(getApplicationContext(),"Email ya esta ocupado",Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Mensaje> call, Throwable t) {
-                                    Log.e("Erro..!!", t.getMessage());
-                                }
-                            });
-
-
+                            txtMail.getText().toString());
                 }else{
                     Toast.makeText(getApplicationContext(),"Password no iguales",Toast.LENGTH_SHORT).show();
                 }
@@ -110,4 +89,5 @@ public class RegistryActivity extends AppCompatActivity {
         }
         return errores;
     }
+
 }

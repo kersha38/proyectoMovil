@@ -7,11 +7,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.example.carlos.proyectomascotas.control.ConsultasServiceWeb;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
-import com.example.carlos.proyectomascotas.modelo.Usuario;
+import com.example.carlos.proyectomascotas.control.TareasAsync.TareaAuthUsuarioComun;
+import com.example.carlos.proyectomascotas.control.TareasAsync.TareaUsuarioGmailFb;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -28,10 +28,6 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     // variables para logueo de gmail
@@ -58,8 +54,8 @@ public class LoginActivity extends AppCompatActivity {
         botonIngresar = (Button)findViewById(R.id.buttonMenu);
         SignInButton botonGoogle = (SignInButton) findViewById(R.id.googlebutton);
         //envio contexto para abrir activity desde afuera
-        consultasServiceWeb = new ConsultasServiceWeb();
-        consultasServiceWeb.obtenerContexto(LoginActivity.this);
+        consultasServiceWeb = new ConsultasServiceWeb(LoginActivity.this);
+
         //Gmail
         botonGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,17 +71,15 @@ public class LoginActivity extends AppCompatActivity {
                 //Authentificacion de Usuario comun
                 //if(!loginGmailFb){
                 if (!exitenCamposVacios()){
-                    Usuario user = consultasServiceWeb.autentificarUsuarioComun(
-                            nombre.getText().toString(),
-                            password.getText().toString()
-                    );
+//                    Usuario user = consultasServiceWeb.autentificarUsuarioComun(
+//                            nombre.getText().toString(),
+//                            password.getText().toString()
+//                    );
+                    TareaAuthUsuarioComun tareaAuthUsuario = new TareaAuthUsuarioComun(LoginActivity.this);
+                    tareaAuthUsuario.execute(nombre.getText().toString(), password.getText().toString());
                     limpiarCampos();
-                    Log.e("Sync calls","Acabe auth");
-//                    if(user != null){
-//                        irALoggearseConMac();
-//                    }else{
-//                        Toast.makeText(getApplicationContext(), "Datos incorrectos", Toast.LENGTH_SHORT).show();
-//                    }
+                    Log.e("Sync calls","En el Main, Acabe auth");
+
                 }
             }
         });
@@ -95,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setReadPermissions("public_profile");
         // If using in a fragment
         //loginButton.setFragment(this);
-        //facebook
+
         callbackManager = CallbackManager.Factory.create();
         /***************************FACEBOOK*******************/
         CODEfacebook=FacebookSdk.getCallbackRequestCodeOffset();
@@ -119,20 +113,18 @@ public class LoginActivity extends AppCompatActivity {
                                     Log.e("fb id",perfil.getId());
                                     //Log.e("fb uri",perfil.getProfilePictureUri(100,200).toString());
 
-                                    //serviceLoginGmailFB(acc.getEmail(), acc.getDisplayName());
+                                    //CONSULTA AL SERVICIO WEB para crear cuenta y/o ingresar directo
                                     consultarServicioParaGmailFb(perfil.getName(),perfil.getId());
 
                                     //detener profile tracker
                                     mProfileTracker.stopTracking();
                                 }
                             };
-                            // no need to call startTracking() on mProfileTracker
-                            // because it is called by its constructor, internally.
+
                         }
                         else {
                             perfil = Profile.getCurrentProfile();
-
-                            //serviceLoginGmailFB
+                            //CONSULTA AL SERVICIO
                             consultarServicioParaGmailFb(perfil.getName(),perfil.getId());
 
                         }
@@ -148,12 +140,6 @@ public class LoginActivity extends AppCompatActivity {
                         // App code
                     }
                 });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        consultasServiceWeb.obtenerContexto(LoginActivity.this);
     }
 
     public void logeoGmail(){
@@ -192,7 +178,7 @@ public class LoginActivity extends AppCompatActivity {
                 Log.e("email",acc.getDisplayName());
                 Log.e("email",acc.getId());
 
-                //servicio web
+                //CONSULTA SERVICE WEB
                 consultarServicioParaGmailFb(acc.getDisplayName(),acc.getId());
 
             }
@@ -207,32 +193,18 @@ public class LoginActivity extends AppCompatActivity {
 
     public void consultarServicioParaGmailFb(String name, String idCuenta){
         limpiarCampos();
-        consultasServiceWeb.verificarExisteGmailFb(name, idCuenta);
-
-//        if(!existeCuenta){
-//            consultasServiceWeb.crearCuentaGmailFb(name, idCuenta);
-//                Toast.makeText(getApplicationContext(),"Usuario Gmail/Fb Creado",Toast.LENGTH_SHORT).show();
-//                Usuario user = consultasServiceWeb.autentificarUsuarioGmailFb(idCuenta);
-//                if(user != null){
-//                    irALoggearseConMac();
-//                }
-
-//        }else{
-//            Usuario user = consultasServiceWeb.autentificarUsuarioGmailFb(idCuenta);
-//            if(user != null){
-//                irALoggearseConMac();
-//            }
-//        }
+        //consultasServiceWeb.verificarExisteGmailFb(name, idCuenta);
+        TareaUsuarioGmailFb tarea = new TareaUsuarioGmailFb(LoginActivity.this);
+        tarea.execute(name,idCuenta);
     }
 
     public void registrarUsuario(View view) {
-        Intent intent = new Intent(getApplicationContext(), RegistryActivity.class);
-        startActivity(intent);
-    }
 
-    public void irALoggearseConMac(){
-        Intent intentPrincipal = new Intent(getApplicationContext(),RegistrarMacActivity.class);
-        startActivity(intentPrincipal);
+        Intent intent = new Intent(getApplicationContext(), RegistryActivity.class);
+
+        //Intent intent = new Intent(getApplicationContext(), VideoActivity.class);
+
+        startActivity(intent);
     }
 
     public boolean exitenCamposVacios(){
@@ -255,6 +227,9 @@ public class LoginActivity extends AppCompatActivity {
     public void empezarNuevaActivity(final String activity_to_start){
         if (activity_to_start.equals("ACTIVITY_REG_MAC")){
             Intent intent = new Intent(LoginActivity.this, RegistrarMacActivity.class);
+            startActivity(intent);
+        }else if(activity_to_start.equals("ACTIVITY_MENU")){
+            Intent intent = new Intent(LoginActivity.this, MenuActivity.class);
             startActivity(intent);
         }
     }

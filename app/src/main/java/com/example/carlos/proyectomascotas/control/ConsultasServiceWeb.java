@@ -16,14 +16,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ConsultasServiceWeb {
-    Usuario usuarioComun = null;
+    //Usuario usuarioComun = null;
     Usuario usuarioGmailFb = null;
     private boolean bandera;
     ServiceWeb serviceWeb = new ServiceWeb();
     Context realContext;
 
-    public ConsultasServiceWeb(){
-
+    public ConsultasServiceWeb(Context context){
+        realContext = context;
     }
 
     public void verificarExisteGmailFb(final String name, final String email){
@@ -78,6 +78,7 @@ public class ConsultasServiceWeb {
     }
 
     public Usuario autentificarUsuarioComun(String name, String password){
+        final Usuario[] usuarioComun = {null};
         serviceWeb
                 .getJSONObjeto()
                 .getUsuarioAuth(name,password)
@@ -86,7 +87,7 @@ public class ConsultasServiceWeb {
                              public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                                  Usuario jsonResponse = response.body();
                                  if(jsonResponse != null){
-                                     usuarioComun = jsonResponse;
+                                     usuarioComun[0] = jsonResponse;
                                      Log.e("Nombre: ",jsonResponse.getNickname()+"");
                                      Log.e("Password: ",jsonResponse.getPassword()+"");
 
@@ -102,7 +103,7 @@ public class ConsultasServiceWeb {
                              }
                          }
                 );
-        return usuarioComun;
+        return usuarioComun[0];
     }
 
     public Usuario autentificarUsuarioGmailFb(String email){
@@ -132,8 +133,6 @@ public class ConsultasServiceWeb {
         return usuarioGmailFb;
     }
 
-    public void obtenerContexto(Context context){
-        realContext = context;
-    }
+
 
 }
