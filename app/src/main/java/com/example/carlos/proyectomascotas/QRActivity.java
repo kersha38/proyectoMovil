@@ -19,22 +19,31 @@ import android.widget.Toast;
 import java.util.StringTokenizer;
 
 import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
+import com.example.carlos.proyectomascotas.control.ServiceWeb;
 import com.example.carlos.proyectomascotas.modelo.Configuration;
+import com.example.carlos.proyectomascotas.modelo.Usuario;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class QRActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler{
 
     private static final int REQUESTCAMERA = 1;
     private ZXingScannerView scannerView;
     private  static int camID= Camera.CameraInfo.CAMERA_FACING_BACK;
+    private String email;
+    private Usuario usuario = null;
+    private ServiceWeb serviceWeb = new ServiceWeb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
-
+        //extras intent
+        email = getIntent().getExtras().getString("email");
         // permisos a camera
         scannerView = new ZXingScannerView(this);
         // cuando se abre el activitu va directo a la camera
@@ -117,55 +126,50 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result result) {
-
-        // AlertDialog.Builder alerDialog= new AlertDialog.Builder(this);
-        //resultado
-        //alerDialog.setMessage(result.getText());
-        // formato codigo de barras
-        //alerDialog.setMessage(result.getBarcodeFormat());
-
-        //alerDialog.show();
-
+        String raspeberry = result.getText();
         Log.e("result",result.getText());
         Log.e("resultQR",result.getBarcodeFormat().toString());
 
         /***********lo que se debe hacer capturado el QR************/
-        LeerEscribirArchivos leerEscribirArchivos=new LeerEscribirArchivos();
-        Configuration configurationActual=leerEscribirArchivos.leerArchivo("configuration.bin");
+//        LeerEscribirArchivos leerEscribirArchivos=new LeerEscribirArchivos();
+//        Configuration configurationActual=leerEscribirArchivos.leerArchivo("configuration.bin");
 
-        if(configurationActual.getUrl()==result.getText()){
-            crearDialogoAlert();
-        }else{
-            configurationActual.setUrl(result.getText());
-            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
-            Toast.makeText(getApplicationContext(),"Raspberry registrada",Toast.LENGTH_SHORT);
-            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-            startActivity(intent);
-            finish();
-        }
+//        if(configurationActual.getUrl()==result.getText()){
+
+//        }else{
+//            configurationActual.setUrl(result.getText());
+//            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
+        Log.e("email:",email+"");
+        Log.e("rasp:", raspeberry);
+        Usuario user = new Usuario("","",email,raspeberry,"");
+        Log.e("emailQR:", user.getMail()+"");
+        Log.e("raspbQR:", user.getIpRasp()+"");
+        serviceWeb.getJSONObjeto().registrarMAC(user)
+                .enqueue(new Callback<Usuario>() {
+                    @Override
+                    public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                        Usuario jsonResponse = response.body();
+                        if(jsonResponse != null){
+                            usuario = jsonResponse;
+                            Log.e("Registrado:", usuario.getNickname());
+                            Toast.makeText(getApplicationContext(),"Raspberry registrada",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Usuario> call, Throwable t) {
+                        Log.e("Error :o", t.getMessage());
+                    }
+                });
+
+
+
+        //}
     }
 
-    public void crearDialogoAlert(){
-        // Builder para crear la alerta
-        // this = getaplicationcontext
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(this);
-        dialogoAlerta.setTitle("Mensaje");
-        dialogoAlerta.setMessage("El dispositivo ya fue registrado anteriormente");
-
-        // interface para el boton Positive
-        dialogoAlerta.setPositiveButton("Entendido", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(getApplicationContext(),"Registre otro dispositivo",Toast.LENGTH_LONG).show();
-            }
-        });
 
 
-        // cancelar sin aplastar un boton
-        dialogoAlerta.setCancelable(true);
-
-        dialogoAlerta.create();
-        dialogoAlerta.show();
-    }
 }

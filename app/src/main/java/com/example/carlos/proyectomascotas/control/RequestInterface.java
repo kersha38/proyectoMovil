@@ -36,5 +36,9 @@ public interface RequestInterface {
             @Body Usuario usuario
     );
 
+    @POST("Usuario/registrarRaspberry")
+    Call<Usuario> registrarMAC(
+            @Body Usuario usuario
+    );
 
 }
