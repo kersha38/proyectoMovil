@@ -8,7 +8,7 @@ export class UsuarioService {
 
     obtenerUsuario(nickname){
         console.log("nickBusqueda: "+nickname);
-        var usuarioBuscado:any;
+        let usuarioBuscado:any;
         this.users.forEach((usuario)=>{
             //console.log(usuario.nickname)
             if (usuario.nickname == nickname){
@@ -31,7 +31,7 @@ export class UsuarioService {
     }
 
     crearUsuarioComun(nickname, mail, password) {
-        var mailDisponible= true;
+        let mailDisponible= true;
         this.users.forEach((usuario)=>{
             if(usuario.mail == mail && usuario.necesitaPassword == "si"){
                 mailDisponible=false;
@@ -40,15 +40,7 @@ export class UsuarioService {
         if(mailDisponible){
             const usuario={"nickname":nickname,"mail":mail,"password":password,"necesitaPassword":"si","ipRasp":""};
             this.users.push(usuario);
-            fs.writeFile(
-                __dirname + '/archivosDatos/usuarios.json',
-                JSON.stringify(this.users, null, 4), (err) => {
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                    console.log("JsonUsuario creado");
-                });
+            this.escribirArchivoUsuarios();
             return {"mensaje":"usuarioCreado"};
         }else{
             return {"mensaje":"Email ya fue ocupado"}
@@ -56,7 +48,7 @@ export class UsuarioService {
     }
 
     existeGmailFb(mail){
-        var existeCuenta= false;
+        let existeCuenta= false;
         this.users.forEach((usuario)=>{
             if(usuario.mail == mail){
                 existeCuenta=true;
@@ -69,33 +61,24 @@ export class UsuarioService {
     crearConGmailFb(nickname, mail) {
         const usuario={"nickname":nickname,"mail":mail,"password":"","necesitaPassword":"no","ipRasp":""};
         this.users.push(usuario);
-        fs.writeFile(
-            __dirname + '/archivosDatos/usuarios.json',
-            JSON.stringify(this.users, null, 4), (err) => {
-                if (err) {
-                    console.error(err);
-                    return;
-                }
-                console.log("JsonUsuarios creado");
-            });
+        this.escribirArchivoUsuarios();
         return {"mensaje":"usuarioCreado"};
     }
 
     autentificarComun(nickname,password){
         //devuelve undefined si no encuentra
-        var usuarioBuscado:any;
+        let usuarioBuscado:any;
         this.users.forEach((usuario)=>{
             //console.log(usuario.nickname)
             if (usuario.nickname == nickname && usuario.password==password && usuario.necesitaPassword=="si"){
                 usuarioBuscado=usuario;
             }
         });
-        console.log(usuarioBuscado);
         return usuarioBuscado;
     }
 
     autentificarGmailFb(mail){
-        var usuarioBuscado:any;
+        let usuarioBuscado:any;
         this.users.forEach((usuario)=>{
             //console.log(usuario.nickname)
             if (usuario.mail == mail && usuario.necesitaPassword=="no"){
@@ -106,20 +89,34 @@ export class UsuarioService {
         return usuarioBuscado;
     }
 
-    registrarRaspberry(raspberry,mail){
-        var usuarioBuscado:any;
-        console.log("raspA",raspberry);
+    registrarRaspberry(ipRasp,mail){
+        let usuarioBuscado:any;
+        console.log("raspA",ipRasp);
         this.users.forEach((usuario,numeroUsuario)=>{
-            console.log("raspB",usuario.raspberry);
+            console.log("raspB",usuario.ipRasp);
             if (usuario.mail == mail){
 
                 usuarioBuscado=usuario;
-                console.log(usuarioBuscado);
-                usuarioBuscado.ipRasp=raspberry;
+                usuarioBuscado.ipRasp=ipRasp;
                 this.users[numeroUsuario]=usuarioBuscado;
+                console.log(this.users[numeroUsuario]);
             }
         });
+
+        this.escribirArchivoUsuarios();
         return usuarioBuscado;
 
+    }
+
+    escribirArchivoUsuarios(){
+        fs.writeFile(
+            __dirname + '/archivosDatos/usuarios.json',
+            JSON.stringify(this.users, null, 4), (err) => {
+                if (err) {
+                    console.error(err);
+                    return;
+                }
+                console.log("JsonUsuario creado");
+            });
     }
 }

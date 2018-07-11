@@ -1,10 +1,9 @@
-import {    Body,
+import {
     Controller,
     FileInterceptor,
     Get,
     Post,
-    Query,
-    Req,
+    Query, Req,
     Res,
     UploadedFile,
     UseInterceptors
@@ -12,7 +11,7 @@ import {    Body,
 import {RaspeberryService} from "./raspeberry.service";
 
 // opciones del middleware multer para subir archivos
-const multer = require('multer')
+const multer = require('multer');
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
         callback(null, './subidos')
@@ -20,7 +19,7 @@ const storage = multer.diskStorage({
     filename: function(req, file, callback) {
         callback(null, file.originalname)
     }
-})
+});
 @Controller('Raspberry')
 export class RaspberryController {
     constructor(private _raspberryService:RaspeberryService){
@@ -38,10 +37,15 @@ export class RaspberryController {
     }
 
     @Get('obtenerRaspberry')
-    obtenerRaspberry(@Req() request,@Res() response){
-        const raspberry=request.ip;
-        console.log("idRaspberry: "+raspberry)
-        response.redirect('http://api.qrserver.com/v1/create-qr-code/?data='+raspberry+'&size=100x100');
+    obtenerRaspberry(@Res() response){
+        //const raspberry=request.ip;
+        console.log("idRaspberry: "+this._raspberryService.getRaspberry());
+        response.redirect('http://api.qrserver.com/v1/create-qr-code/?data='+this._raspberryService.getRaspberry()+'&size=100x100');
+    }
+
+    @Get('publicarRaspberry')
+    publicarRaspberry(@Query('raspberry') raspberry){
+        return this._raspberryService.publicarRaspberry(raspberry);
     }
 
     @Post('subirVideo')
@@ -53,5 +57,16 @@ export class RaspberryController {
     uploadFile(@UploadedFile() file) {
         console.log("se subio un archivo".toLocaleUpperCase());
         console.log(file);
+    }
+
+    @Get('publicarIP')
+    publicarIP(@Query('raspberry')raspberry,@Req() req){
+        return this._raspberryService.publicarIP(raspberry,req.ip);
+
+    }
+
+    @Get('consultarIP')
+    consultarIP(@Query('raspberry') raspberry){
+        return this._raspberryService.consultarIP(raspberry);
     }
 }

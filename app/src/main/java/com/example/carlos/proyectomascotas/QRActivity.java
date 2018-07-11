@@ -126,7 +126,8 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 
     @Override
     public void handleResult(Result result) {
-        String raspeberry = result.getText();
+        final String raspeberry = result.getText().trim();
+        Log.e("raspeberryrr",raspeberry);
         Log.e("result",result.getText());
         Log.e("resultQR",result.getBarcodeFormat().toString());
 
@@ -139,10 +140,9 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 //        }else{
 //            configurationActual.setUrl(result.getText());
 //            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
-        Log.e("email:",email+"");
-        Log.e("rasp:", raspeberry);
+
         Usuario user = new Usuario("","",email,raspeberry,"");
-        Log.e("emailQR:", user.getMail()+"");
+        Log.e("emailQR:", user.getMail());
         Log.e("raspbQR:", user.getIpRasp()+"");
         serviceWeb.getJSONObjeto().registrarMAC(user)
                 .enqueue(new Callback<Usuario>() {
@@ -154,6 +154,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                             Log.e("Registrado:", usuario.getNickname());
                             Toast.makeText(getApplicationContext(),"Raspberry registrada",Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            intent.putExtra("raspberry", usuario.getIpRasp());
                             startActivity(intent);
                             finish();
                         }

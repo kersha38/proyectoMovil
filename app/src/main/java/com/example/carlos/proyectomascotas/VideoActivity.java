@@ -20,7 +20,7 @@ public class VideoActivity extends AppCompatActivity {
         webView=(WebView) findViewById(R.id.webView);
 
         //video view
-        Uri videoUri = Uri.parse("http://192.168.5.10:300/Usuario/obtenerVideo");
+        Uri videoUri = Uri.parse("http://172.29.65.98:300/Usuario/obtenerVideo");
         MediaController controller= new MediaController(this);
         //controller.setMediaPlayer(videoView);
         videoView.setMediaController(controller);
@@ -28,7 +28,7 @@ public class VideoActivity extends AppCompatActivity {
         videoView.requestFocus();
         videoView.start();
 
-        webView.loadUrl("http://192.168.5.10:300/Usuario/obtenerVideo");
+        webView.loadUrl("http://172.29.65.98:300/Usuario/obtenerVideo");
 
 
     }

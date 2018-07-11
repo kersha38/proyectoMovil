@@ -5,12 +5,19 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
+import com.example.carlos.proyectomascotas.control.ServiceWeb;
 import com.example.carlos.proyectomascotas.modelo.Configuration;
+import com.example.carlos.proyectomascotas.modelo.Mensaje;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ComidaActivity extends AppCompatActivity {
 
@@ -19,12 +26,14 @@ public class ComidaActivity extends AppCompatActivity {
     TextView ultimaPuestaFechaComida; //S Web
     TextView ultimaPuestaHoraComida; //S Web
     LeerEscribirArchivos leerEscribirArchivos = new LeerEscribirArchivos();
+    String raspberry;
+    ServiceWeb serviceWeb = new ServiceWeb();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comida);
-
+        raspberry = getIntent().getExtras().getString("raspberry");
         cantidadActualComida = (TextView)findViewById(R.id.cantidadActualComida);
         cantidadPonerseComida = (TextView) findViewById(R.id.cantidadComidaPonerse);
         ultimaPuestaFechaComida = (TextView) findViewById(R.id.ultimaPuestaComidaFecha);
@@ -67,7 +76,24 @@ public class ComidaActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //lo q sucede al dar clic
-                Toast.makeText(getApplicationContext(),"Comida Liberada",Toast.LENGTH_SHORT).show();
+                Log.e("rasp a enviar", raspberry+"");
+                serviceWeb.getJSONObjeto().ordenar("comida", raspberry).enqueue(
+                        new Callback<Mensaje>() {
+                            @Override
+                            public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                                Mensaje jsonResponse = response.body();
+                                if(jsonResponse.getMensaje().equals("ordenExitosa")){
+                                    Toast.makeText(getApplicationContext(),"Comida Liberada",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Mensaje> call, Throwable t) {
+                                Log.e("No lo logro",":(");
+                            }
+                        }
+                );
+
             }
         });
 

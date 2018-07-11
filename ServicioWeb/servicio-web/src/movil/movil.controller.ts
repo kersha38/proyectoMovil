@@ -8,8 +8,8 @@ export class MovilController {
 
     }
     @Get('anadirOrden')
-    añadirOrden(@Query('tipo') tipo,@Query('raspberry') raspberry){
-        return this._raspberryService.añadirOrden(raspberry,tipo);
+    anadirOrden(@Query('tipo') tipo,@Query('raspberry') raspberry){
+        return this._raspberryService.anadirOrden(raspberry,tipo);
 
     }
 

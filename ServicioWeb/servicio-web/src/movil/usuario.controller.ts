@@ -4,8 +4,7 @@ import {RaspeberryService} from "../raspberry/raspeberry.service";
 const fs = require('fs');
 @Controller('Usuario')
 export class UsuarioController {
-    constructor(private _usuarioService: UsuarioService,
-                _raspberryService: RaspeberryService) {
+    constructor(private _usuarioService: UsuarioService) {
         _usuarioService.listarUsuarios();
     }
 
@@ -53,7 +52,7 @@ export class UsuarioController {
 
     @Post('registrarRaspberry')
     registrarRaspberry(@Body() usuario){
-        return this._usuarioService.registrarRaspberry(usuario.raspberry,usuario.mail);
+        return this._usuarioService.registrarRaspberry(usuario.ipRasp,usuario.mail);
     }
 
     @Get('obtenerVideo')
