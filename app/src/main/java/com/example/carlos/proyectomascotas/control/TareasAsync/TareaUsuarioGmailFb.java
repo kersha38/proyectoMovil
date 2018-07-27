@@ -3,6 +3,7 @@ package com.example.carlos.proyectomascotas.control.TareasAsync;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.carlos.proyectomascotas.LoginActivity;
+import com.example.carlos.proyectomascotas.MenuActivity;
+import com.example.carlos.proyectomascotas.RegistrarMacActivity;
 import com.example.carlos.proyectomascotas.control.Dialogo;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
@@ -34,7 +37,7 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         String name = strings[0];
         String idCuenta = strings[1];
         Usuario usuario = null;
-        if(verificarExisteCuenta(name, idCuenta)){
+        if(verificarExisteCuenta(idCuenta)){ //idCuenta corresponde a Email, si existe
             try {
                 usuario = autentificarUsuarioGmailFb(idCuenta);
             } catch (InterruptedException e) {
@@ -82,8 +85,16 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
     protected void onPostExecute(Usuario usuario) {
         progressDialog.dismiss();
         if(usuario != null){
-            Log.e("PostExe:",usuario.getNickname()+"");
-            cambiarDeActivity();
+            Log.e("Nombre:",usuario.getNickname());//ojo
+            Log.e("Cuenta: ",usuario.getMail());
+            Toast.makeText(contextoActivity,"Autenticación exitosa",Toast.LENGTH_SHORT).show();
+            if(usuario.getIpRasp().equals("")){
+                irActivityRegMAC(usuario.getMail());
+            }else {
+                irActivityMenu(usuario.getIpRasp(), usuario.getMail());
+            }
+        }else{
+            Log.e("Post Exe", "No usuario gmail/fb");
         }
     }
 
@@ -99,7 +110,7 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         return networkInfo != null && networkInfo.isAvailable() && networkInfo.isConnected();
     }
 
-    public Boolean verificarExisteCuenta(final String name, final String email){
+    public Boolean verificarExisteCuenta(final String email){
         final boolean[] existe = {false};
         try {
             serviceWeb
@@ -110,21 +121,16 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
                         public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                             Mensaje jsonResponse= response.body();
                             Log.e("Contenido: ",jsonResponse.getMensaje());
-                            if(jsonResponse.getMensaje().equals("true")){ //service responde TRUE || false
-                                //si existe cuenta google fb, directo autentica
-                                //autentificarUsuarioGmailFb(email);
+                            if(jsonResponse.getMensaje().equals("true")){ //service response
                                 existe[0] = true;
                             }else{
-                                //no existe, primero registra y luego autentica
-                                //crearCuentaGmailFb(name, email);
                                 existe[0] = false;
                             }
-
                         }
 
                         @Override
                         public void onFailure(Call<Mensaje> call, Throwable t) {
-                            Log.e("Erro..!!", t.getMessage());
+                            Log.e("Erro Verificacion..!!", t.getMessage());
                         }
                     });
             Thread.sleep(1500);
@@ -134,26 +140,26 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         return existe[0];
     }
 
-    public Usuario autentificarUsuarioGmailFb(String email) throws InterruptedException {
+    public Usuario autentificarUsuarioGmailFb(String idCuenta) throws InterruptedException {
         final Usuario[] usuarioGmailFb = {null};
         serviceWeb
                 .getJSONObjeto()
-                .getUsuarioGmailFbAuth(email)
+                .getUsuarioGmailFbAuth(idCuenta)
                 .enqueue(new Callback<Usuario>() {
                              @Override
                              public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                                  Usuario jsonResponse = response.body();
-                                 Log.e("Auth: ",jsonResponse.getNickname()+"");
+                                 Log.e("Nombre: ",jsonResponse.getNickname());//ojo
                                  if(jsonResponse != null){
                                      usuarioGmailFb[0] = jsonResponse;
-
+                                     Log.e("Cuenta: ",usuarioGmailFb[0].getMail());
                                  }
                              }
 
                              @Override
                              public void onFailure(Call<Usuario> call, Throwable t) {
-                                 Log.e("Erro..!!", t.getMessage());
-                                 Toast.makeText(contextoActivity,"No autenticado",Toast.LENGTH_SHORT).show();
+                                 Log.e("Erro Auth..!!", t.getMessage());
+                                 //
                              }
                          }
                 );
@@ -182,15 +188,25 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
 
                     @Override
                     public void onFailure(Call<Mensaje> call, Throwable t) {
-                        Log.e("Erro..!!", t.getMessage());
+                        Log.e("Erro Creacion..!!", t.getMessage());
                     }
                 });
         Thread.sleep(1500);
         return creoUsuario[0];
     }
 
-    public void cambiarDeActivity(){
+    public void irActivityRegMAC(String email){
         LoginActivity activity = (LoginActivity) contextoActivity;
-        activity.empezarNuevaActivity("ACTIVITY_REG_MAC");
+        Intent intent = new Intent(contextoActivity, RegistrarMacActivity.class);
+        intent.putExtra("email", email);
+        activity.startActivity(intent);
+    }
+
+    public void irActivityMenu(String ipRasp, String email){
+        LoginActivity activity = (LoginActivity) contextoActivity;
+        Intent intent = new Intent(contextoActivity, MenuActivity.class);
+        intent.putExtra("ipRasp", ipRasp);
+        intent.putExtra("email", email);
+        activity.startActivity(intent);
     }
 }

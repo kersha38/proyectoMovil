@@ -92,7 +92,7 @@ public class ConsultasServiceWeb {
                                      Log.e("Password: ",jsonResponse.getPassword()+"");
 
                                      LoginActivity loginActivity = (LoginActivity) realContext;
-                                     loginActivity.empezarNuevaActivity("ACTIVITY_REG_MAC");
+                                     //loginActivity.empezarNuevaActivity("ACTIVITY_REG_MAC");
                                  }
                              }
 
@@ -119,7 +119,7 @@ public class ConsultasServiceWeb {
                                  if(jsonResponse != null){
                                      usuarioGmailFb = jsonResponse;
                                      LoginActivity loginActivity = (LoginActivity) realContext;
-                                     loginActivity.empezarNuevaActivity("ACTIVITY_REG_MAC");
+                                     //loginActivity.empezarNuevaActivity("ACTIVITY_REG_MAC");
                                  }
                              }
 

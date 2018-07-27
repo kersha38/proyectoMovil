@@ -139,8 +139,6 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
 //        }else{
 //            configurationActual.setUrl(result.getText());
 //            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
-        Log.e("email:",email+"");
-        Log.e("rasp:", raspeberry);
         Usuario user = new Usuario("","",email,raspeberry,"");
         Log.e("emailQR:", user.getMail()+"");
         Log.e("raspbQR:", user.getIpRasp()+"");
