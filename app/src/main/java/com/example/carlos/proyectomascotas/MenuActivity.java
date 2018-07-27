@@ -46,7 +46,7 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void irACamara(View view){
-        Intent intent = new Intent(getApplicationContext(), CamaraActivity.class);
+        Intent intent = new Intent(getApplicationContext(), VideoActivity.class);
         startActivity(intent);
     }
 

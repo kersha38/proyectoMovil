@@ -7,18 +7,27 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
 
+import com.example.carlos.proyectomascotas.modelo.Mensaje;
+
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Dialogo {
     private Context context;
+    AlertDialog.Builder dialogoAlerta;
+    boolean confirmo = false;
 
     public Dialogo(Context context){
         this.context = context;
+        dialogoAlerta= new AlertDialog.Builder(context);
     }
 
     public void alertarConexionInternet(){
 
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
+
         dialogoAlerta.setTitle("Sin Conexión a Internet");
         dialogoAlerta.setMessage("Verifique su conexión con WiFi o active los datos");
 
@@ -30,29 +39,51 @@ public class Dialogo {
             }
         });
 
+        // cancelar sin aplastar un boton
+        dialogoAlerta.setCancelable(true);
+
+        dialogoAlerta.create();
+        dialogoAlerta.show();
+    }
+
+    public boolean confirmarPonerComida(){
+        //AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
+
+        dialogoAlerta.setTitle("ALERTA DE COMIDA");
+        dialogoAlerta.setMessage("¿Esta seguro de poner comida?");
+
+        // interface para el boton Positive
+        dialogoAlerta.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //lo q sucede al dar clic
+                confirmo = true;
+            }
+        });
+
         // interface para el boton Negative
-//        dialogoAlerta.setNegativeButton("Salir", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                //lo q sucede al dar clic
-//                //Toast.makeText(context,"Selecciono No en dialog",Toast.LENGTH_LONG).show();
-//            }
-//        });
+        dialogoAlerta.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
 
         // interface para el boton Neutral
-//        dialogoAlerta.setNeutralButton("Salir", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                //lo q sucede al dar clic
-//                //Toast.makeText(context,"Selecciono Neutral en dialog",Toast.LENGTH_LONG).show();
-//            }
-//        });
+        dialogoAlerta.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
 
         // cancelar sin aplastar un boton
         dialogoAlerta.setCancelable(true);
 
         dialogoAlerta.create();
         dialogoAlerta.show();
+
+        return confirmo;
     }
 
     public void mostrarlistaDialogo(final Context context){

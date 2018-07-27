@@ -2,6 +2,7 @@ package com.example.carlos.proyectomascotas;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,53 +38,35 @@ public class LuzActivity extends AppCompatActivity {
         switchLuz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // envio peticion al servior
-                //Toast.makeText(getApplicationContext(),"Orden Enviada",Toast.LENGTH_SHORT).show();
-
-                //datos quemados cambiar
                 if(switchLuz.isChecked()){
-                    //Orden al ServiceWeb - Raspberry
-                    serviceWeb.getJSONObjeto().ordenar("luzON",raspberry).enqueue(
-                            new Callback<Mensaje>() {
-                                @Override
-                                public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
-                                    Mensaje jsonResponse = response.body();
-                                    if(jsonResponse.getMensaje().equals("ordenExitosa")){
-                                        txtEstadoIluminacion.setText("encendido");
-                                        imgEncenderApagar.setBackgroundResource(R.drawable.focoencendido);
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Mensaje> call, Throwable t) {
-
-                                }
-                            }
-                    );
-
+                    //Orden al ServiceWeb - Raspberry - ON
+                    encenderApagarLucesServicio("luzON","encendido");
                 }else{
-                    //
-                    serviceWeb.getJSONObjeto().ordenar("luzOFF",raspberry).enqueue(
-                            new Callback<Mensaje>() {
-                                @Override
-                                public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
-                                    Mensaje jsonResponse = response.body();
-                                    if(jsonResponse.getMensaje().equals("ordenExitosa")){
-                                        txtEstadoIluminacion.setText("apagado");
-                                        imgEncenderApagar.setBackgroundResource(R.drawable.focoapagado);
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Mensaje> call, Throwable t) {
-
-                                }
-                            }
-                    );
-
+                    //Orden al ServiceWeb - Raspberry - OFF
+                    encenderApagarLucesServicio("luzOFF", "apagado");
                 }
-
             }
         });
+    }
+
+    public void encenderApagarLucesServicio(String orden, final String mensaje){
+        serviceWeb.getJSONObjeto().ordenar(orden,raspberry).enqueue(
+                new Callback<Mensaje>() {
+                    @Override
+                    public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
+                        Mensaje jsonResponse = response.body();
+                        if(jsonResponse.getMensaje().equals("ordenExitosa")){
+                            txtEstadoIluminacion.setText(mensaje);
+                            imgEncenderApagar.setBackgroundResource(R.drawable.focoapagado);
+                            Toast.makeText(getApplicationContext(),"Luz remota "+mensaje,Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Mensaje> call, Throwable t) {
+                        Log.e("No logro ON/OFF",":(");
+                    }
+                }
+        );
     }
 }

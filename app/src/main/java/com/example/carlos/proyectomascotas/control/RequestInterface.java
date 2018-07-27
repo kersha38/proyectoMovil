@@ -1,5 +1,6 @@
 package com.example.carlos.proyectomascotas.control;
 
+import com.example.carlos.proyectomascotas.modelo.Configuration;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
 import com.example.carlos.proyectomascotas.modelo.Usuario;
 
@@ -44,7 +45,13 @@ public interface RequestInterface {
     @GET("Movil/anadirOrden")
     Call<Mensaje> ordenar(
             @Query("tipo") String tipo,
-            @Query("raspberry") String raspberry);
+            @Query("raspberry") String raspberry
+    );
+
+    @GET("Movil/consultarSenso")
+    Call<Configuration> monitorear(
+            @Query("raspberry") String raspberry
+    );
 
 
 

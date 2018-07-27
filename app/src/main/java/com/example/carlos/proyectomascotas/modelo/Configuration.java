@@ -6,6 +6,24 @@ public class Configuration implements Serializable {
 
     private Double cantidadAgua, cantidadComida;
     private String url;
+    private String hora, fecha;
+
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getHora() {
+
+        return hora;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
 
     public Configuration(Double cantidadAgua, Double cantidadComida, String url) {
         this.cantidadAgua = cantidadAgua;

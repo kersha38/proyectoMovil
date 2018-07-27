@@ -163,7 +163,6 @@
             android:layout_weight="3"
             android:background="@drawable/comidaperros"
             android:gravity="center"
-            android:onClick="liberarComida"
             android:paddingLeft="25dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

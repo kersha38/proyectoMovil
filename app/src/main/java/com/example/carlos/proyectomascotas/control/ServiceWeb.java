@@ -1,5 +1,7 @@
 package com.example.carlos.proyectomascotas.control;
 
+import android.util.Log;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -9,11 +11,16 @@ public class ServiceWeb {
     RequestInterface request;
 
     public ServiceWeb(){
-        retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.4:300")//.baseUrl("http://tranquil-mountain-87492.herokuapp.com")
-                .baseUrl("http://172.29.64.110:300")//.baseUrl("http://tranquil-mountain-87492.herokuapp.com")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        try {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl("http://192.168.1.4:300")//.baseUrl("http://tranquil-mountain-87492.herokuapp.com")
+                    //.baseUrl("http://172.29.64.110:300")//.baseUrl("http://tranquil-mountain-87492.herokuapp.com")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }catch (Error e){
+            Log.e("Error conecting service",e.getMessage());
+        }
+
 
     }
 
