@@ -9,16 +9,19 @@ import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
 import com.example.carlos.proyectomascotas.modelo.Configuration;
 
 public class MenuActivity extends AppCompatActivity {
+    private String raspberry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+        raspberry = getIntent().getExtras().getString("raspberry");
         configurar();
     }
 
     public void irAComida(View view){
         Intent intent = new Intent(getApplicationContext(), ComidaActivity.class);
+        intent.putExtra("raspberry", raspberry);
         startActivity(intent);
     }
 
@@ -38,6 +41,7 @@ public class MenuActivity extends AppCompatActivity {
 
     public void irALuz(View view){
         Intent intent = new Intent(getApplicationContext(), LuzActivity.class);
+        intent.putExtra("raspberry", raspberry);
         startActivity(intent);
     }
 

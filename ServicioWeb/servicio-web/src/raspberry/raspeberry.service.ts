@@ -4,8 +4,10 @@ import {Injectable} from "@nestjs/common";
 export class RaspeberryService {
     ordenes:Orden[]=[];
     sensados:Senso[]=[];
+    raspberryPublicada="";
+    raspInfos:RaspInfo[]=[];
 
-    añadirOrden(raspberry,tipo){
+    anadirOrden(raspberry,tipo){
 
         let actualizo=false;
         const orden= new Orden(raspberry,tipo);
@@ -23,7 +25,7 @@ export class RaspeberryService {
             this.ordenes.push(orden)
         }
 
-        return orden;
+        return {"mensaje":"ordenExitosa"};
     }
 
     obtenerOrden(raspberry){
@@ -76,6 +78,49 @@ export class RaspeberryService {
 
         return senso;
     }
+
+    publicarRaspberry(raspberry){
+        this.raspberryPublicada=raspberry;
+        return raspberry;
+    }
+
+    getRaspberry(){
+        return this.raspberryPublicada;
+    }
+
+    publicarIP(raspberry,ipPura){
+        console.log("ipPura: "+ipPura);
+        let actualizo=false;
+        const raspInfo= new RaspInfo(raspberry,ipPura);
+        this.raspInfos.forEach((value)=>{
+            if(value.raspberry==raspberry){
+
+                value.ipPura=ipPura;//sin substringla cadena completa OJO
+                value.ipPura=ipPura.substring(7);
+                actualizo=true;
+                return value;
+
+            }
+        });
+
+        if(!actualizo){
+            this.raspInfos.push(raspInfo);
+        }
+
+        return raspInfo;
+    }
+
+    consultarIP(raspberry){
+        let raspInfo:any;
+        this.raspInfos.forEach((value)=>{
+            if (value.raspberry==raspberry){
+                raspInfo=value;
+            }
+        });
+
+        return raspInfo;
+        //return this.sensados;
+    }
 }
 export class Orden {
     constructor(public raspberry,public tipo){}
@@ -84,5 +129,10 @@ export class Orden {
 
 export class Senso {
     constructor(public raspberry,public estado){}
+
+}
+
+export class RaspInfo {
+    constructor(public raspberry,public ipPura){}
 
 }

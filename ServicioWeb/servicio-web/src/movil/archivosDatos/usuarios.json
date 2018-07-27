@@ -39,6 +39,34 @@
         "mail": "betico",
         "password": "betico",
         "necesitaPassword": "si",
+        "ipRasp": "B8:27:EB:35:40:49"
+    },
+    {
+        "nickname": "a",
+        "mail": "a",
+        "password": "a",
+        "necesitaPassword": "si",
         "ipRasp": ""
+    },
+    {
+        "nickname": "b",
+        "mail": "b",
+        "password": "b",
+        "necesitaPassword": "si",
+        "ipRasp": ""
+    },
+    {
+        "nickname": "na",
+        "mail": "na",
+        "password": "na",
+        "necesitaPassword": "si",
+        "ipRasp": ""
+    },
+    {
+        "nickname": "tu",
+        "mail": "tu",
+        "password": "tu",
+        "necesitaPassword": "si",
+        "ipRasp": "b8:27:eb:60:15:1c"
     }
 ]

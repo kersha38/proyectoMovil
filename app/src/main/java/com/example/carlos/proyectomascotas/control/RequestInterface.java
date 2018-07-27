@@ -41,4 +41,11 @@ public interface RequestInterface {
             @Body Usuario usuario
     );
 
+    @GET("Movil/anadirOrden")
+    Call<Mensaje> ordenar(
+            @Query("tipo") String tipo,
+            @Query("raspberry") String raspberry);
+
+
+
 }

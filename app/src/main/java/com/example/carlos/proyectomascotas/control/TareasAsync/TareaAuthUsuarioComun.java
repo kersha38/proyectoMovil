@@ -104,7 +104,7 @@ public class TareaAuthUsuarioComun extends AsyncTask<String, Integer, Usuario> {
     public void irActivityMenu(String ipRasp, String email){
         LoginActivity activity = (LoginActivity) contextoActivity;
         Intent intent = new Intent(contextoActivity, MenuActivity.class);
-        intent.putExtra("ipRasp", ipRasp);
+        intent.putExtra("raspberry", ipRasp);
         intent.putExtra("email", email);
         activity.startActivity(intent);
     }
