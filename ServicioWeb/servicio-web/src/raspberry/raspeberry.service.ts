@@ -6,6 +6,7 @@ export class RaspeberryService {
     sensados:Senso[]=[];
     raspberryPublicada="";
     raspInfos:RaspInfo[]=[];
+    configuraciones:Configuracion[]=[];
 
     anadirOrden(raspberry,tipo){
 
@@ -121,6 +122,44 @@ export class RaspeberryService {
         return raspInfo;
         //return this.sensados;
     }
+
+    cambiarConfiguracion(raspberry,cantidadAgua,cantidadComida){
+        console.log("agua: "+cantidadAgua);
+        let actualizo=false;
+        const configuracion= new Configuracion(raspberry,cantidadAgua,cantidadComida);
+        this.configuraciones.forEach((value)=>{
+            if(value.raspberry==raspberry){
+                value.cantidadComida=cantidadComida;
+                value.cantidadAgua=cantidadAgua;//sin substringla cadena completa OJO
+                actualizo=true;
+                return value;
+
+            }
+        });
+
+        if(!actualizo){
+            this.configuraciones.push(configuracion);
+        }
+
+
+        this.anadirOrden(raspberry,"actualizarConfiguracion");
+
+        return configuracion;
+    }
+
+    consultarConfiguracion(raspberry){
+        let configuracion:Configuracion;
+        this.configuraciones.forEach((value)=>{
+            if (value.raspberry==raspberry){
+                configuracion=value;
+            }
+        });
+        const configuracionJSON= {cantidadComida:configuracion.cantidadComida,
+        cantidadAgua:configuracion.cantidadAgua
+        };
+        return configuracionJSON;
+        //return this.sensados;
+    }
 }
 export class Orden {
     constructor(public raspberry,public tipo){}
@@ -134,5 +173,10 @@ export class Senso {
 
 export class RaspInfo {
     constructor(public raspberry,public ipPura){}
+
+}
+
+export class Configuracion {
+    constructor(public raspberry,public cantidadAgua,public cantidadComida){}
 
 }

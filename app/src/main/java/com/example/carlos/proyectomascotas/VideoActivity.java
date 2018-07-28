@@ -18,17 +18,20 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
         videoView=(VideoView)findViewById(R.id.videoView3);
         webView=(WebView) findViewById(R.id.webView);
+        String direccion="http://172.29.64.249:8081/";
+        //String direccion="http://172.29.65.98:300/Usuario/obtenerVideo";
 
-        //video view
-        Uri videoUri = Uri.parse("http://172.29.65.98:300/Usuario/obtenerVideo");
-        MediaController controller= new MediaController(this);
-        //controller.setMediaPlayer(videoView);
-        videoView.setMediaController(controller);
-        videoView.setVideoURI(videoUri);
-        videoView.requestFocus();
-        videoView.start();
+//        //video view
+//        Uri videoUri = Uri.parse(direccion);
+//        MediaController controller= new MediaController(this);
+//
+//        //controller.setMediaPlayer(videoView);
+//        videoView.setMediaController(controller);
+//        videoView.setVideoURI(videoUri);
+//        videoView.requestFocus();
+//        videoView.start();
 
-        webView.loadUrl("http://172.29.65.98:300/Usuario/obtenerVideo");
+        webView.loadUrl(direccion);
 
 
     }

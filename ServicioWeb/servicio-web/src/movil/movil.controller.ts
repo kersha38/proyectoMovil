@@ -1,6 +1,7 @@
 import {Controller, Get, Query} from "@nestjs/common";
 import {RaspeberryService} from "../raspberry/raspeberry.service";
 
+
 @Controller('Movil')
 export class MovilController {
 

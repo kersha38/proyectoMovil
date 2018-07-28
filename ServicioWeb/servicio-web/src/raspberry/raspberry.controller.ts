@@ -27,7 +27,8 @@ export class RaspberryController {
     }
 
     @Get('actualizarSenso')
-    actualizarSenso(@Query('raspberry') raspberry,@Query('estado') estado){
+    actualizarSenso(@Query('raspberry') raspberry,
+                    @Query('estado') estado){
         return this._raspberryService.actualizarSenso(raspberry,estado);
     }
 
@@ -68,5 +69,18 @@ export class RaspberryController {
     @Get('consultarIP')
     consultarIP(@Query('raspberry') raspberry){
         return this._raspberryService.consultarIP(raspberry);
+    }
+
+    @Get('consultarConfiguracion')
+    consultarConfiguracion(@Query('raspberry') raspberry){
+        return this._raspberryService.consultarConfiguracion(raspberry);
+    }
+
+    @Get('cambiarConfiguracion')
+    cambiarConfiguracion(@Query('raspberry') raspberry,
+                         @Query('cantidadAgua') cantidadAgua,
+                         @Query('cantidadComida') cantidadComida){
+
+        return this._raspberryService.cambiarConfiguracion(raspberry,cantidadAgua,cantidadComida);
     }
 }
