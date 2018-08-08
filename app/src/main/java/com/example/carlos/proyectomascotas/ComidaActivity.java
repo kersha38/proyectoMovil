@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.carlos.proyectomascotas.control.ConsultasServiceWeb;
 import com.example.carlos.proyectomascotas.control.Dialogo;
 import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
@@ -40,7 +41,11 @@ public class ComidaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comida);
 
         raspberry = getIntent().getExtras().getString("raspberry");
-        sensoresRaspberry = (SensoresRaspberry) getIntent().getExtras().getSerializable("monitoreo");
+        //sensoresRaspberry = (SensoresRaspberry) getIntent().getExtras().getSerializable("monitoreo");
+        //Thread.sleep(1000);
+        monitorear();
+        //ConsultasServiceWeb consultasServiceWeb = new ConsultasServiceWeb(ComidaActivity.this);
+        //sensoresRaspberry = consultasServiceWeb.monitorear(this.raspberry);
 
         cantidadActualComida = (TextView)findViewById(R.id.cantidadActualComida);
         cantidadPonerseComida = (TextView) findViewById(R.id.cantidadComidaPonerse);
@@ -48,19 +53,41 @@ public class ComidaActivity extends AppCompatActivity {
         ultimaPuestaHoraComida = (TextView)findViewById(R.id.ultimaPuestaComidaHora);
 
 
-        ultimaPuestaFechaComida.setText(sensoresRaspberry.getFecha());
-        ultimaPuestaHoraComida.setText(sensoresRaspberry.getHora());
-        cantidadActualComida.setText(sensoresRaspberry.getComida()); //raspberry pi
-        cantidadPonerseComida.setText(verConfiguracion()); //pre-configurado
+    }
 
-        botonComida = (Button) findViewById(R.id.buttonPonerAlimento);
+    private void monitorear() {
 
-        botonComida.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                liberarComida(view);
-            }
-        });
+        serviceWeb.getJSONObjeto().monitorear(raspberry)
+                .enqueue(new Callback<SensoresRaspberry>() {
+                    @Override
+                    public void onResponse(Call<SensoresRaspberry> call, Response<SensoresRaspberry> response) {
+                        SensoresRaspberry jsonResponse = response.body();
+                        Log.e("Sensado",jsonResponse.toString());
+                        if(jsonResponse != null){
+                            sensoresRaspberry = jsonResponse;
+                            Log.e("Sensado despues",jsonResponse.toString());
+                            // Log.e("Sensor ",sensoresRaspberry.toString());
+                            ultimaPuestaFechaComida.setText(sensoresRaspberry.getFecha());
+                            ultimaPuestaHoraComida.setText(sensoresRaspberry.getHora());
+                            cantidadActualComida.setText(sensoresRaspberry.getComida()); //raspberry pi
+                            cantidadPonerseComida.setText(verConfiguracion()); //pre-configurado
+
+                            botonComida = (Button) findViewById(R.id.buttonPonerAlimento);
+
+                            botonComida.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    liberarComida(view);
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SensoresRaspberry> call, Throwable t) {
+                        Log.e("Error!!",t.getMessage());
+                    }
+                });
     }
 
     private String verConfiguracion() {
@@ -68,13 +95,6 @@ public class ComidaActivity extends AppCompatActivity {
         return configuration.getComida().toString();
     }
 
-//    private String monitorear() {
-//        //sensor raspberry pi
-//        monitorearServicio();
-//        Toast.makeText(getApplicationContext(),"Comida Monitoreada",Toast.LENGTH_SHORT).show();
-//        return "50.5";
-//
-//    }
 
     public void liberarComida(View view){
         //configuracion raspberry liberar cant comida gr.

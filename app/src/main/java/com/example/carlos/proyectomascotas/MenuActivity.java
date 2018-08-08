@@ -21,11 +21,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void irAComida(View view){
-//        Intent intent = new Intent(getApplicationContext(), ComidaActivity.class);
-//        intent.putExtra("raspberry", raspberry);
-//        startActivity(intent);
-        TareaMonitorear tareaMonitorear = new TareaMonitorear(MenuActivity.this, "comida");
-        tareaMonitorear.execute(raspberry);
+        Intent intent = new Intent(getApplicationContext(), ComidaActivity.class);
+        intent.putExtra("raspberry", raspberry);
+        startActivity(intent);
+        //TareaMonitorear tareaMonitorear = new TareaMonitorear(MenuActivity.this, "comida");
+        //tareaMonitorear.execute(raspberry);
     }
 
     public void irAAgua(View view){

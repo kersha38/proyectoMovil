@@ -117,7 +117,7 @@ public class TareaMonitorear extends AsyncTask<String, Integer, SensoresRaspberr
 
         MenuActivity activity = (MenuActivity) contextoActivity;
         Intent intent = new Intent(contextoActivity, AguaActivity.class);
-        intent.putExtra("monitoreo", sensores);
+        //intent.putExtra("monitoreo", sensores);
         intent.putExtra("raspberry", raspberry);
         activity.startActivity(intent);
         //finalizarActivity();
@@ -127,7 +127,7 @@ public class TareaMonitorear extends AsyncTask<String, Integer, SensoresRaspberr
 
         MenuActivity activity = (MenuActivity) contextoActivity;
         Intent intent = new Intent(contextoActivity, ComidaActivity.class);
-        intent.putExtra("monitoreo", sensores);
+        //intent.putExtra("monitoreo", sensores);
         intent.putExtra("raspberry", raspberry);
         activity.startActivity(intent);
         //finalizarActivity();
@@ -136,7 +136,7 @@ public class TareaMonitorear extends AsyncTask<String, Integer, SensoresRaspberr
     public void irActivityLuz(SensoresRaspberry sensores){
         MenuActivity activity = (MenuActivity) contextoActivity;
         Intent intent = new Intent(contextoActivity, LuzActivity.class);
-        intent.putExtra("monitoreo", sensores);
+        //intent.putExtra("monitoreo", sensores);
         activity.startActivity(intent);
     }
 

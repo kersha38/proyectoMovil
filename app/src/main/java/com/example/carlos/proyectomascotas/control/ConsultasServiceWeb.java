@@ -154,15 +154,18 @@ public class ConsultasServiceWeb {
         );
     }
 
+    private SensoresRaspberry sensoresRaspberry =null;
+
     public SensoresRaspberry monitorear(String raspberry){
-        final SensoresRaspberry[] sensoresRaspberry = new SensoresRaspberry[1];
+
         serviceWeb.getJSONObjeto().monitorear(raspberry)
                 .enqueue(new Callback<SensoresRaspberry>() {
                     @Override
                     public void onResponse(Call<SensoresRaspberry> call, Response<SensoresRaspberry> response) {
                         SensoresRaspberry jsonResponse = response.body();
+                        Log.e("Sensado",jsonResponse.toString());
                         if(jsonResponse != null){
-                            sensoresRaspberry[0] = jsonResponse;
+                            sensoresRaspberry = jsonResponse;
                             Log.e("Sensado",jsonResponse.toString());
                         }
                     }
@@ -172,7 +175,7 @@ public class ConsultasServiceWeb {
                         Log.e("Error!!",t.getMessage());
                     }
                 });
-
+        return sensoresRaspberry;
     }
 
 

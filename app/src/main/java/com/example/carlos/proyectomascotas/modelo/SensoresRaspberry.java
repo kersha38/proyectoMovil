@@ -1,14 +1,22 @@
 package com.example.carlos.proyectomascotas.modelo;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
-public class SensoresRaspberry implements Serializable{
+public class SensoresRaspberry {
 
     private String agua;
+
     private String comida;
+
     private String luz;
-    private String hora;
+
     private String fecha;
+
+    private String hora;
+
 
     public SensoresRaspberry(String agua, String comida, String luz, String hora, String fecha) {
         this.agua = agua;
@@ -56,6 +64,17 @@ public class SensoresRaspberry implements Serializable{
 
     public void setFecha(String fecha) {
         this.fecha = fecha;
+    }
+
+    @Override
+    public String toString() {
+        return "SensoresRaspberry{" +
+                "agua='" + agua + '\'' +
+                ", comida='" + comida + '\'' +
+                ", luz='" + luz + '\'' +
+                ", fecha='" + fecha + '\'' +
+                ", hora='" + hora + '\'' +
+                '}';
     }
 }
 
