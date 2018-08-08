@@ -32,8 +32,8 @@ public class PersonalizacionActivity extends AppCompatActivity {
         btnGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                configuration.setCantidadAgua(Double.parseDouble(txtRacionAgua.getText().toString()));
-                configuration.setCantidadComida(Double.parseDouble(txtRacionAlimento.getText().toString()));
+                configuration.setAgua(Double.parseDouble(txtRacionAgua.getText().toString()));
+                configuration.setComida(Double.parseDouble(txtRacionAlimento.getText().toString()));
                 leerEscribirArchivos.escribirArchivo(configuration,"configuration.bin");
                 finish();
             }
@@ -43,8 +43,8 @@ public class PersonalizacionActivity extends AppCompatActivity {
     public Configuration cargarConfiguracion(){
         Configuration configuration=leerEscribirArchivos.leerArchivo("configuration.bin");
 
-        txtRacionAgua.setText(Double.toString(configuration.getCantidadAgua()));
-        txtRacionAlimento.setText(Double.toString(configuration.getCantidadComida()));
+        txtRacionAgua.setText(Double.toString(configuration.getAgua()));
+        txtRacionAlimento.setText(Double.toString(configuration.getComida()));
 
         return configuration;
     }

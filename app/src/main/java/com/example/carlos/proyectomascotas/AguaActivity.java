@@ -19,7 +19,8 @@ public class AguaActivity extends AppCompatActivity {
     TextView ultimaPuestaAguaFecha;
     TextView ultimaPuestaAguaHora;
     LeerEscribirArchivos leerEscribirArchivos = new LeerEscribirArchivos();
-    SensoresRaspberry sensoresRaspberry;
+    SensoresRaspberry sensoresRaspberry= null;
+    String raspberry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,14 +28,15 @@ public class AguaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_agua);
 
         sensoresRaspberry = (SensoresRaspberry) getIntent().getExtras().getSerializable("monitoreo");
+        raspberry = getIntent().getExtras().getString("raspberry");
         cantidadActualAgua = (TextView)findViewById(R.id.cantidadActualAgua);
         ultimaPuestaAguaFecha = findViewById(R.id.ultimaPuestaAguaFecha);
         ultimaPuestaAguaHora = findViewById(R.id.ultimaPuestaAguaHora);
         cantidadAguaPonerse = findViewById(R.id.cantidadAguaPonerse);
-        ultimaPuestaAguaFecha.setText("07-06-2018");
-        ultimaPuestaAguaHora.setText("15h35");
+        ultimaPuestaAguaFecha.setText(sensoresRaspberry.getFecha());
+        ultimaPuestaAguaHora.setText(sensoresRaspberry.getHora());
 
-        cantidadActualAgua.setText(monitorear());
+        cantidadActualAgua.setText(sensoresRaspberry.getAgua());
         cantidadAguaPonerse.setText(verConfiguracion());
     }
 

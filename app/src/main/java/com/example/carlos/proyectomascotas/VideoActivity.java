@@ -18,7 +18,8 @@ public class VideoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_video);
         //videoView=(VideoView)findViewById(R.id.videoView3);
         webView=(WebView) findViewById(R.id.webView);
-        String direccion="http://172.29.64.249:8081/";
+        webView.getSettings().setDomStorageEnabled(true);
+        String direccion="http://172.29.65.113:8081";
         //String direccion="http://172.29.65.98:300/Usuario/obtenerVideo";
 
 //        //video view

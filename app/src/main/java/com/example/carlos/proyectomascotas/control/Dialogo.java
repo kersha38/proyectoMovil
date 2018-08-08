@@ -19,9 +19,11 @@ public class Dialogo {
     private Context context;
     AlertDialog.Builder dialogoAlerta;
     boolean confirmo = false;
+    ConsultasServiceWeb consultasServiceWeb;
 
     public Dialogo(Context context){
         this.context = context;
+        consultasServiceWeb = new ConsultasServiceWeb(this.context);
         dialogoAlerta= new AlertDialog.Builder(context);
     }
 
@@ -46,7 +48,7 @@ public class Dialogo {
         dialogoAlerta.show();
     }
 
-    public boolean confirmarPonerComida(){
+    public void confirmarPonerComida(final String raspberry){
         //AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
 
         dialogoAlerta.setTitle("ALERTA DE COMIDA");
@@ -57,7 +59,7 @@ public class Dialogo {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //lo q sucede al dar clic
-                confirmo = true;
+                consultasServiceWeb.ordenarComidaServicio(raspberry);
             }
         });
 
@@ -83,7 +85,7 @@ public class Dialogo {
         dialogoAlerta.create();
         dialogoAlerta.show();
 
-        return confirmo;
+        //return confirmo;
     }
 
     public void mostrarlistaDialogo(final Context context){

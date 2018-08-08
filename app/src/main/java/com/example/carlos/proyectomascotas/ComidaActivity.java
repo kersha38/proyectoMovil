@@ -16,6 +16,7 @@ import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
 import com.example.carlos.proyectomascotas.control.ServiceWeb;
 import com.example.carlos.proyectomascotas.modelo.Configuration;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
+import com.example.carlos.proyectomascotas.modelo.SensoresRaspberry;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,23 +32,25 @@ public class ComidaActivity extends AppCompatActivity {
     LeerEscribirArchivos leerEscribirArchivos = new LeerEscribirArchivos();
     String raspberry;
     ServiceWeb serviceWeb = new ServiceWeb();
+    SensoresRaspberry sensoresRaspberry = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comida);
+
         raspberry = getIntent().getExtras().getString("raspberry");
+        sensoresRaspberry = (SensoresRaspberry) getIntent().getExtras().getSerializable("monitoreo");
 
         cantidadActualComida = (TextView)findViewById(R.id.cantidadActualComida);
         cantidadPonerseComida = (TextView) findViewById(R.id.cantidadComidaPonerse);
         ultimaPuestaFechaComida = (TextView) findViewById(R.id.ultimaPuestaComidaFecha);
         ultimaPuestaHoraComida = (TextView)findViewById(R.id.ultimaPuestaComidaHora);
 
-        monitorear();
 
-        ultimaPuestaFechaComida.setText("07-06-2018");
-        ultimaPuestaHoraComida.setText("15h35");
-        cantidadActualComida.setText(monitorear()); //raspberry pi
+        ultimaPuestaFechaComida.setText(sensoresRaspberry.getFecha());
+        ultimaPuestaHoraComida.setText(sensoresRaspberry.getHora());
+        cantidadActualComida.setText(sensoresRaspberry.getComida()); //raspberry pi
         cantidadPonerseComida.setText(verConfiguracion()); //pre-configurado
 
         botonComida = (Button) findViewById(R.id.buttonPonerAlimento);
@@ -65,20 +68,19 @@ public class ComidaActivity extends AppCompatActivity {
         return configuration.getComida().toString();
     }
 
-    private String monitorear() {
-        //sensor raspberry pi
-        monitorearServicio();
-        Toast.makeText(getApplicationContext(),"Comida Monitoreada",Toast.LENGTH_SHORT).show();
-        return "50.5";
-
-    }
+//    private String monitorear() {
+//        //sensor raspberry pi
+//        monitorearServicio();
+//        Toast.makeText(getApplicationContext(),"Comida Monitoreada",Toast.LENGTH_SHORT).show();
+//        return "50.5";
+//
+//    }
 
     public void liberarComida(View view){
         //configuracion raspberry liberar cant comida gr.
         Dialogo dialogo = new Dialogo(ComidaActivity.this);
-        if(dialogo.confirmarPonerComida()){
-            ordenarComidaServicio();
-        }
+        dialogo.confirmarPonerComida(raspberry);
+
     }
 
     public void ordenarComidaServicio(){
@@ -101,9 +103,6 @@ public class ComidaActivity extends AppCompatActivity {
         );
     }
 
-    public void monitorearServicio(){
-
-    }
 
 
 }

@@ -200,9 +200,9 @@ public class LoginActivity extends AppCompatActivity {
 
     public void registrarUsuario(View view) {
 
-        //Intent intent = new Intent(getApplicationContext(), RegistryActivity.class);
+        Intent intent = new Intent(getApplicationContext(), RegistryActivity.class);
 
-        Intent intent = new Intent(getApplicationContext(), VideoActivity.class);
+        //Intent intent = new Intent(getApplicationContext(), VideoActivity.class);
 
         startActivity(intent);
     }
