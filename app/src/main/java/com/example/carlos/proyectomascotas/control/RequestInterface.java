@@ -2,6 +2,7 @@ package com.example.carlos.proyectomascotas.control;
 
 import com.example.carlos.proyectomascotas.modelo.Configuration;
 import com.example.carlos.proyectomascotas.modelo.Mensaje;
+import com.example.carlos.proyectomascotas.modelo.SensoresRaspberry;
 import com.example.carlos.proyectomascotas.modelo.Usuario;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public interface RequestInterface {
     );
 
     @GET("Movil/consultarSenso")
-    Call<Configuration> monitorear(
+    Call<SensoresRaspberry> monitorear(
             @Query("raspberry") String raspberry
     );
 
