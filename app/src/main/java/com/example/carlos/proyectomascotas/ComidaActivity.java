@@ -62,7 +62,7 @@ public class ComidaActivity extends AppCompatActivity {
 
     private String verConfiguracion() {
         Configuration configuration = leerEscribirArchivos.leerArchivo("configuration.bin");
-        return Double.toString(configuration.getCantidadComida());
+        return configuration.getComida().toString();
     }
 
     private String monitorear() {

@@ -34,8 +34,10 @@ public class MenuActivity extends AppCompatActivity {
         LeerEscribirArchivos leerEscribirArchivos= new LeerEscribirArchivos();
         Configuration configuration=leerEscribirArchivos.leerArchivo("configuration.bin");
         if(configuration==null){
+
             Configuration configurationPorDefecto=new Configuration(125.0,125.0);
             leerEscribirArchivos.escribirArchivo(configurationPorDefecto,"configuration.bin");
+
         }
     }
 

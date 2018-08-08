@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.example.carlos.proyectomascotas.control.LeerEscribirArchivos;
 import com.example.carlos.proyectomascotas.modelo.Configuration;
+import com.example.carlos.proyectomascotas.modelo.SensoresRaspberry;
 
 public class AguaActivity extends AppCompatActivity {
 
@@ -18,12 +19,14 @@ public class AguaActivity extends AppCompatActivity {
     TextView ultimaPuestaAguaFecha;
     TextView ultimaPuestaAguaHora;
     LeerEscribirArchivos leerEscribirArchivos = new LeerEscribirArchivos();
+    SensoresRaspberry sensoresRaspberry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_agua);
 
+        sensoresRaspberry = (SensoresRaspberry) getIntent().getExtras().getSerializable("monitoreo");
         cantidadActualAgua = (TextView)findViewById(R.id.cantidadActualAgua);
         ultimaPuestaAguaFecha = findViewById(R.id.ultimaPuestaAguaFecha);
         ultimaPuestaAguaHora = findViewById(R.id.ultimaPuestaAguaHora);
@@ -37,7 +40,9 @@ public class AguaActivity extends AppCompatActivity {
 
     private String verConfiguracion() {
         Configuration configuration = leerEscribirArchivos.leerArchivo("configuration.bin");
+
         return configuration.getComida().toString();
+
     }
 
     private String monitorear() {
