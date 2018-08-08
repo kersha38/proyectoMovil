@@ -14,7 +14,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="CaLuPet Sense"
+        android:label="Mascota Inteligente"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -75,7 +75,7 @@
         <activity
             android:name=".RegistrarMacActivity"
             android:label="Registro Mac" />
-        <activity android:name=".VideoActivity"></activity>
+        <activity android:name=".VideoActivity" android:label="Video"></activity>
     </application>
 
 </manifest>

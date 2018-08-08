@@ -4,9 +4,45 @@ import java.io.Serializable;
 
 public class Configuration implements Serializable {
 
-    private Double cantidadAgua, cantidadComida;
+    private String agua;
+    private String comida;
     private String url;
-    private String hora, fecha;
+    private String luz;
+    private String hora;
+    private String fecha;
+
+    public Configuration(String agua, String comida, String url, String luz, String hora, String fecha) {
+        this.agua = agua;
+        this.comida = comida;
+        this.url = url;
+        this.luz = luz;
+        this.hora = hora;
+        this.fecha = fecha;
+    }
+
+    public String getAgua() {
+        return agua;
+    }
+
+    public void setAgua(String agua) {
+        this.agua = agua;
+    }
+
+    public String getComida() {
+        return comida;
+    }
+
+    public void setComida(String comida) {
+        this.comida = comida;
+    }
+
+    public String getLuz() {
+        return luz;
+    }
+
+    public void setLuz(String luz) {
+        this.luz = luz;
+    }
 
     public void setHora(String hora) {
         this.hora = hora;
@@ -25,19 +61,6 @@ public class Configuration implements Serializable {
         return fecha;
     }
 
-    public Configuration(Double cantidadAgua, Double cantidadComida, String url) {
-        this.cantidadAgua = cantidadAgua;
-        this.cantidadComida = cantidadComida;
-        this.url = url;
-    }
-
-    public Double getCantidadAgua() {
-        return cantidadAgua;
-    }
-
-    public void setCantidadAgua(Double cantidadAgua) {
-        this.cantidadAgua = cantidadAgua;
-    }
 
     public void setUrl(String url) {
         this.url = url;
@@ -50,17 +73,11 @@ public class Configuration implements Serializable {
     @Override
     public String toString() {
         return "Configuration{" +
-                "cantidadAgua=" + cantidadAgua +
-                ", cantidadComida=" + cantidadComida +
-                ", url='" + url + '\'' +
+                "agua=" + agua +
+                ", comida=" + comida +
+                ", luz='" + luz + '\'' +
+                ", hora='" + hora + '\'' +
+                ", fecha='" + fecha + '\'' +
                 '}';
-    }
-
-    public Double getCantidadComida() {
-        return cantidadComida;
-    }
-
-    public void setCantidadComida(Double cantidadComida) {
-        this.cantidadComida = cantidadComida;
     }
 }
