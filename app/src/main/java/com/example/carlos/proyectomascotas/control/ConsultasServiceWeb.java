@@ -134,48 +134,29 @@ public class ConsultasServiceWeb {
         return usuarioGmailFb;
     }
 
-    public void ordenarComidaServicio(String raspberry){
+
+
+    public Boolean ordenarComidaAgua(String raspberry, final String tipo){
+        final boolean[] orden = {false};
         Log.e("rasp a enviar", raspberry+"");
-        serviceWeb.getJSONObjeto().ordenar("comida", raspberry).enqueue(
+        serviceWeb.getJSONObjeto().ordenar(tipo, raspberry).enqueue(
                 new Callback<Mensaje>() {
                     @Override
                     public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                         Mensaje jsonResponse = response.body();
                         if(jsonResponse.getMensaje().equals("ordenExitosa")){
-                            Toast.makeText(realContext,"Comida Liberada",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(realContext, tipo.toUpperCase()+" LIBERADA",Toast.LENGTH_SHORT).show();
+                            orden[0] = true;
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Mensaje> call, Throwable t) {
-                        Log.e("No logro comida",":(");
+                        Log.e("No logro comida :(",t.getMessage());
                     }
                 }
         );
-    }
-
-    private SensoresRaspberry sensoresRaspberry =null;
-
-    public SensoresRaspberry monitorear(String raspberry){
-
-        serviceWeb.getJSONObjeto().monitorear(raspberry)
-                .enqueue(new Callback<SensoresRaspberry>() {
-                    @Override
-                    public void onResponse(Call<SensoresRaspberry> call, Response<SensoresRaspberry> response) {
-                        SensoresRaspberry jsonResponse = response.body();
-                        Log.e("Sensado",jsonResponse.toString());
-                        if(jsonResponse != null){
-                            sensoresRaspberry = jsonResponse;
-                            Log.e("Sensado",jsonResponse.toString());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SensoresRaspberry> call, Throwable t) {
-                        Log.e("Error!!",t.getMessage());
-                    }
-                });
-        return sensoresRaspberry;
+        return orden[0];
     }
 
 

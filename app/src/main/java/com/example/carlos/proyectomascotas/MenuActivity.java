@@ -29,10 +29,11 @@ public class MenuActivity extends AppCompatActivity {
     }
 
     public void irAAgua(View view){
-//        Intent intent = new Intent(getApplicationContext(), AguaActivity.class);
-//        startActivity(intent);
-        TareaMonitorear tareaMonitorear = new TareaMonitorear(MenuActivity.this, "agua");
-        tareaMonitorear.execute(raspberry);
+        Intent intent = new Intent(getApplicationContext(), AguaActivity.class);
+        intent.putExtra("raspberry", raspberry);
+        startActivity(intent);
+        //TareaMonitorear tareaMonitorear = new TareaMonitorear(MenuActivity.this, "agua");
+        //tareaMonitorear.execute(raspberry);
     }
 
     public void configurar(){

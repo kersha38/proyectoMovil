@@ -33,7 +33,6 @@ public class Dialogo {
         dialogoAlerta.setTitle("Sin Conexión a Internet");
         dialogoAlerta.setMessage("Verifique su conexión con WiFi o active los datos");
 
-        // interface para el boton Positive
         dialogoAlerta.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -48,22 +47,32 @@ public class Dialogo {
         dialogoAlerta.show();
     }
 
-    public void confirmarPonerComida(final String raspberry){
-        //AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
+    public void confirmarPonerComidaAgua(final String raspberry, final String tipo){
+        dialogoAlerta.setTitle("ALERTA DE "+tipo.toUpperCase());
+        dialogoAlerta.setMessage("¿Esta seguro de poner "+ tipo +" a mascota?");
 
-        dialogoAlerta.setTitle("ALERTA DE COMIDA");
-        dialogoAlerta.setMessage("¿Esta seguro de poner comida?");
-
-        // interface para el boton Positive
         dialogoAlerta.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //lo q sucede al dar clic
-                consultasServiceWeb.ordenarComidaServicio(raspberry);
+                boolean orden = consultasServiceWeb.ordenarComidaAgua(raspberry, tipo);
+
+                if(orden){
+                    AlertDialog.Builder dialogoExito = new AlertDialog.Builder(context);
+                    dialogoExito.setTitle("ORDEN EXITOSA");
+                    dialogoExito.setMessage(tipo.toLowerCase()+" ha sido puesta exitosamente");
+
+                    dialogoExito.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+                }
+
             }
         });
 
-        // interface para el boton Negative
         dialogoAlerta.setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -71,7 +80,6 @@ public class Dialogo {
             }
         });
 
-        // interface para el boton Neutral
         dialogoAlerta.setNeutralButton("Cancelar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -85,157 +93,7 @@ public class Dialogo {
         dialogoAlerta.create();
         dialogoAlerta.show();
 
-        //return confirmo;
     }
 
-    public void mostrarlistaDialogo(final Context context){
-        final CharSequence[] items = {"Articulo1","Articulo2","Articulo3","Articulo4"};
 
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
-        dialogoAlerta.setTitle("Mensaje - Titulo");
-
-        // interface para el boton Positive
-        dialogoAlerta.setPositiveButton("si, creo?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono Si en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // interface para el boton Negative
-        dialogoAlerta.setNegativeButton("nop?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono No en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // interface para el boton Neutral
-        dialogoAlerta.setNeutralButton("neutro", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono Neutral en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // cancelar sin aplastar un boton
-        dialogoAlerta.setCancelable(true);
-
-        dialogoAlerta.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context,"Se aplasto un item"+items[which],Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-
-        dialogoAlerta.create();
-        dialogoAlerta.show();
-    }
-
-    public void mostrarSingleChooseDialogo(final Context context){
-
-        final CharSequence[] items = {"Articulo1","Articulo2","Articulo3","Articulo4"};
-
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
-        dialogoAlerta.setTitle("Mensaje - Titulo");
-
-        // interface para el boton Positive
-        dialogoAlerta.setPositiveButton("si, creo?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono Si en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // interface para el boton Negative
-        dialogoAlerta.setNegativeButton("nop?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono No en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // interface para el boton Neutral
-        dialogoAlerta.setNeutralButton("neutro", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono Neutral en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        // cancelar sin aplastar un boton
-        dialogoAlerta.setCancelable(true);
-
-        dialogoAlerta.setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(context,"single check",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        dialogoAlerta.create();
-        dialogoAlerta.show();
-    }
-
-    public void mostrarMultipleChooseDialog(final Context context){
-        final CharSequence[] items = {"Articulo1","Articulo2","Articulo3","Articulo4"};
-        final ArrayList seleccionados= new ArrayList();
-
-        AlertDialog.Builder dialogoAlerta= new AlertDialog.Builder(context);
-        dialogoAlerta.setTitle("Mensaje - Titulo");
-
-// interface para el boton Positive
-        dialogoAlerta.setPositiveButton("si, creo?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                String todo="";
-                //Log.e("boton si","se presiono si");
-                for(int i=0;i<seleccionados.size();i++){
-                    todo+=items[Integer.parseInt((String) seleccionados.get(i))].toString();
-                    //Log.e("item",items[Integer.parseInt((String) seleccionados.get(i))].toString());
-                }
-
-                Toast.makeText(context,todo,Toast.LENGTH_LONG).show();
-
-            }
-        });
-
-        // interface para el boton Negative
-        dialogoAlerta.setNegativeButton("nop?", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //lo q sucede al dar clic
-                Toast.makeText(context,"Selecciono No en dialog",Toast.LENGTH_LONG).show();
-            }
-        });
-
-        dialogoAlerta.setMultiChoiceItems(items, null, new DialogInterface.OnMultiChoiceClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                Log.e("ischeked:",Boolean.toString(isChecked));
-                Log.e("which:",Integer.toString(which));
-
-                if (isChecked){
-                    // seleccione algo
-                    seleccionados.add(Integer.toString(which));
-                }else{
-                    //no seleccione nada
-                    // ojo
-                    seleccionados.remove(Integer.toString(which));
-                }
-            }
-        });
-        dialogoAlerta.setCancelable(true);
-        dialogoAlerta.create();
-        dialogoAlerta.show();
-    }
 }

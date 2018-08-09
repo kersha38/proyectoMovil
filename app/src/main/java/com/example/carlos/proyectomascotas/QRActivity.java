@@ -132,17 +132,6 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
         Log.e("resultQR",result.getBarcodeFormat().toString());
 
         /***********lo que se debe hacer capturado el QR************/
-//        LeerEscribirArchivos leerEscribirArchivos=new LeerEscribirArchivos();
-//        Configuration configurationActual=leerEscribirArchivos.leerArchivo("configuration.bin");
-
-//        if(configurationActual.getUrl()==result.getText()){
-
-//        }else{
-//            configurationActual.setUrl(result.getText());
-//            leerEscribirArchivos.escribirArchivo(configurationActual,"configuration.bin");
-
-
-
 
         Usuario user = new Usuario("","",email,raspeberry,"");
         Log.e("emailQR:", user.getMail());
@@ -159,7 +148,7 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                             intent.putExtra("raspberry", usuario.getIpRasp());
                             startActivity(intent);
-                            finish();
+
                         }
                     }
 
@@ -170,10 +159,8 @@ public class QRActivity extends AppCompatActivity implements ZXingScannerView.Re
                 });
 
 
+        QRActivity.this.finish();
 
-        //}
     }
-
-
 
 }

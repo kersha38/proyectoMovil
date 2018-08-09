@@ -37,7 +37,7 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         String name = strings[0];
         String idCuenta = strings[1];
         Usuario usuario = null;
-        if(verificarExisteCuenta(idCuenta)){ //idCuenta corresponde a Email, si existe
+        if(verificarExisteCuenta(idCuenta)){ //idCuenta = a Email, si existe
             try {
                 usuario = autentificarUsuarioGmailFb(idCuenta);
             } catch (InterruptedException e) {
@@ -45,9 +45,9 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
             }
         }else{
             try {
-                if(crearCuentaGmailFb(name,idCuenta)){
-                    usuario = autentificarUsuarioGmailFb(idCuenta);
-                }
+                usuario = crearCuentaGmailFb(name,idCuenta);
+                    //usuario = autentificarUsuarioGmailFb(idCuenta);
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -77,7 +77,6 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         }
 
         //progressDialog.setProgress(0);
-
 
     }
 
@@ -167,20 +166,24 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
         return usuarioGmailFb[0];
     }
 
-    public Boolean crearCuentaGmailFb(String name, final String email) throws InterruptedException {
-        final boolean[] creoUsuario = {false};
-        Usuario usuarioNuevo = new Usuario(name, "", email, "", "");
+    public Usuario crearCuentaGmailFb(String name, final String email) throws InterruptedException {
+
+        final Usuario[] usuarioNuevo = {new Usuario(name, "", email, "", "")};
         serviceWeb
                 .getJSONObjeto()
-                .crearUsuarioGmailFb(usuarioNuevo)
+                .crearUsuarioGmailFb(usuarioNuevo[0])
                 .enqueue(new Callback<Mensaje>() {
                     @Override
                     public void onResponse(Call<Mensaje> call, Response<Mensaje> response) {
                         Mensaje jsonResponse= response.body();
                         if(jsonResponse.getMensaje().equals("usuarioCreado")){
-                            Toast.makeText(contextoActivity,"Usuario Gmail/Fb Creado",Toast.LENGTH_SHORT).show();
-                            //autentificarUsuarioGmailFb(email);
-                            creoUsuario[0] = true;
+                            Toast.makeText(contextoActivity,"Usuario Gmail-Fb creado con éxito",Toast.LENGTH_SHORT).show();
+                            try {
+                                usuarioNuevo[0] = autentificarUsuarioGmailFb(email);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
                         }else{
 
                         }
@@ -191,8 +194,8 @@ public class TareaUsuarioGmailFb extends AsyncTask<String,Integer,Usuario> {
                         Log.e("Erro Creacion..!!", t.getMessage());
                     }
                 });
-        Thread.sleep(1500);
-        return creoUsuario[0];
+        Thread.sleep(2000);
+        return usuarioNuevo[0];
     }
 
     public void irActivityRegMAC(String email){
